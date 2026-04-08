@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ORYN Campus Hub | Dewmi Umegha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #eef3ff; --bg-soft: #e8f6ff; --surface: #ffffff;
+      --text: #11223f; --muted: #35537f;
+      --primary: #4656d9; --primary-2: #1e97d6; --accent: #6675ff;
+      --border: #c7d5ef;
+      --shadow: 0 18px 40px rgba(63, 98, 178, 0.16);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: Inter, system-ui, sans-serif;
+      color: var(--text); line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, #dde8ff 0, rgba(221,232,255,0) 46%),
+        radial-gradient(circle at 100% 0%, #daf2ff 0, rgba(218,242,255,0) 40%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 100%);
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: ""; position: fixed;
+      width: 280px; height: 280px; border-radius: 50%;
+      filter: blur(4px); z-index: -1; opacity: 0.55;
+    }
+    body::before { top:-60px; left:-60px; background: radial-gradient(circle, #d8e4ff 0%, rgba(216,228,255,0) 72%); animation: floatBlobOne 12s ease-in-out infinite; }
+    body::after  { right:-70px; bottom:-60px; background: radial-gradient(circle, #cceeff 0%, rgba(204,238,255,0) 72%); animation: floatBlobTwo 14s ease-in-out infinite; }
+
+    .container { width: min(1020px, 92%); margin: 0 auto; }
+
+    /* HEADER */
+    .site-header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background-color: rgba(255,255,255,0.88); border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 68px; gap: 0.65rem; }
+    .logo { text-decoration: none; font-weight: 800; font-size: 1.12rem; background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 180%; animation: gradientMove 6s ease infinite; }
+    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; color: var(--muted); font-weight: 600; border: 1px solid var(--border); background: #ebf2ff; padding: 0.45rem 0.9rem; border-radius: 10px; transition: color 0.2s, box-shadow 0.2s; }
+    .back-btn:hover { color: var(--primary); box-shadow: 0 4px 12px rgba(70,86,217,0.15); }
+
+    /* HERO */
+    .case-hero { padding: 5rem 0 2.5rem; animation: fadeUp 0.8s ease both; }
+    .case-eyebrow { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .case-hero h1 { margin: 0 0 0.7rem; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; background: linear-gradient(95deg, #4338ca 0%, #4f46e5 45%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% auto; animation: gradientMove 7s ease infinite; }
+    .subtitle { color: #1c3f6f; font-size: 1.05rem; font-weight: 600; max-width: 700px; margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .tags span { background: linear-gradient(120deg, #e6eeff, #def2ff); border: 1px solid #bdd0ef; color: #1a3b68; font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 999px; }
+
+    /* SECTIONS */
+    .case-section { background: linear-gradient(140deg, rgba(255,255,255,0.93), rgba(238,245,255,0.95)); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; box-shadow: var(--shadow); margin-bottom: 1.4rem; position: relative; overflow: hidden; }
+    .case-section::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); opacity: 0.75; }
+    .case-section h2 { margin: 0 0 1rem; font-size: 1.35rem; }
+    .case-section p { color: #2c4b76; margin: 0.5rem 0; }
+    .case-section ul { padding-left: 1.4rem; color: #2c4b76; margin: 0.5rem 0; }
+    .case-section ul li { margin-bottom: 0.4rem; }
+
+    /* HIGHLIGHTS */
+    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .highlight-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1rem; text-align: center; }
+    .highlight-card .num { font-size: 1.6rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .highlight-card p { margin: 0.3rem 0 0; font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+
+    /* MY ROLE CARD */
+    .role-banner { background: linear-gradient(135deg, #1a2744 0%, #0f3460 100%); border-radius: 18px; padding: 2rem; margin-bottom: 1.4rem; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+    .role-banner::before { content: ""; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(70,86,217,0.3) 0%, transparent 70%); }
+    .role-banner::after  { content: ""; position: absolute; bottom: -30px; left: 30%; width: 150px; height: 150px; border-radius: 50%; background: radial-gradient(circle, rgba(30,151,214,0.2) 0%, transparent 70%); }
+    .role-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(90deg, var(--primary), var(--primary-2)); color: #fff; font-weight: 800; font-size: 0.82rem; padding: 0.35rem 0.9rem; border-radius: 999px; margin-bottom: 1rem; }
+    .role-banner h3 { color: #fff; margin: 0 0 0.5rem; font-size: 1.5rem; position: relative; z-index: 1; }
+    .role-banner p  { color: #a8d1ff; margin: 0; font-size: 0.93rem; line-height: 1.6; position: relative; z-index: 1; }
+    .role-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; position: relative; z-index: 1; }
+    .role-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #e0eeff; font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 999px; }
+
+    /* TEAM GRID */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.9rem; margin-top: 1rem; }
+    .team-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1rem 1.1rem; }
+    .team-card.me { background: linear-gradient(145deg, #e6eeff 0%, #d4eeff 100%); border-color: var(--primary); }
+    .team-card .t-role { font-size: 0.72rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+    .team-card .t-name { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+    .team-card .t-sub  { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+    /* TECH STACK */
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .tech-card { background: #1a2744; border-radius: 14px; padding: 1.1rem 1.2rem; position: relative; overflow: hidden; }
+    .tech-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); }
+    .tech-card .tc-label { font-size: 0.7rem; font-weight: 700; color: #5a7fa8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    .tech-card .tc-item { font-size: 0.82rem; color: #a8d1ff; padding: 0.15rem 0; font-family: 'Courier New', monospace; }
+    .tech-card .tc-item span { color: #80e4b0; font-size: 0.75rem; margin-left: 0.4rem; }
+
+    /* FEATURES */
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+    .feature-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 0.9rem 1rem; display: flex; gap: 0.7rem; align-items: flex-start; }
+    .feature-card .fi { font-size: 1.3rem; flex-shrink: 0; }
+    .feature-card .ft { font-size: 0.85rem; color: #2c4b76; font-weight: 600; }
+
+    /* QA SECTION */
+    .qa-tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .qa-tool-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem 1.2rem; }
+    .qa-tool-card .tool-name { font-weight: 800; font-size: 0.95rem; color: var(--primary); margin-bottom: 0.2rem; }
+    .qa-tool-card .tool-cat  { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .qa-tool-card .tool-desc { font-size: 0.83rem; color: #2c4b76; line-height: 1.5; }
+
+    /* TEST CASES TABLE */
+    .tc-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.82rem; }
+    .tc-table th { background: linear-gradient(90deg, var(--primary), var(--primary-2)); color: #fff; padding: 0.55rem 0.8rem; text-align: left; font-size: 0.75rem; }
+    .tc-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e8f5; color: #2c4b76; }
+    .tc-table tr:nth-child(even) td { background: #f4f8ff; }
+    .tc-table tr:hover td { background: #e8f0ff; }
+    .badge-sprint { background: #e6eeff; color: #4656d9; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 999px; white-space: nowrap; }
+    .badge-pass   { background: #dcfce7; color: #166534; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 999px; }
+    .badge-plan   { background: #fef9c3; color: #854d0e; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 999px; }
+    .tc-id { font-family: 'Courier New', monospace; font-weight: 700; color: var(--primary); font-size: 0.78rem; }
+
+    /* SPRINT TABLE */
+    .sprint-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.83rem; }
+    .sprint-table th { background: linear-gradient(90deg, var(--primary), var(--primary-2)); color: #fff; padding: 0.55rem 0.8rem; text-align: left; }
+    .sprint-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid #e0e8f5; color: #2c4b76; vertical-align: top; }
+    .sprint-table tr:nth-child(even) td { background: #f4f8ff; }
+    .badge-done  { background: #dcfce7; color: #166534; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 999px; }
+    .badge-prog  { background: #e0f2fe; color: #075985; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 999px; }
+    .badge-plan2 { background: #fef9c3; color: #854d0e; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 999px; }
+
+    /* SEVERITY TABLE */
+    .sev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+    .sev-card { border-radius: 14px; padding: 1rem 1.1rem; }
+    .sev-card.critical { background: #2e0d0d; border: 1px solid #7f1d1d; }
+    .sev-card.high     { background: #1c1a0a; border: 1px solid #78350f; }
+    .sev-card.medium   { background: #0a1c1a; border: 1px solid #134e4a; }
+    .sev-card.low      { background: #0d1a2e; border: 1px solid #1e3a5f; }
+    .sev-card .sev-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.4rem; }
+    .sev-card.critical .sev-label { color: #f87171; }
+    .sev-card.high     .sev-label { color: #fb923c; }
+    .sev-card.medium   .sev-label { color: #34d399; }
+    .sev-card.low      .sev-label { color: #60a5fa; }
+    .sev-card .sev-def { font-size: 0.82rem; color: #8b9dc3; line-height: 1.5; }
+    .sev-card .sev-target { font-size: 0.75rem; font-weight: 700; margin-top: 0.4rem; color: #a8d1ff; }
+
+    /* SCREENSHOTS */
+    .media-block { width: 100%; border-radius: 14px; background: linear-gradient(145deg, #e6eeff, #d8f0ff); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 1rem; }
+    .media-block img { width: 100%; display: block; border-radius: 14px; }
+
+    /* API TABLE */
+    .api-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.83rem; }
+    .api-table th { background: linear-gradient(90deg, var(--primary), var(--primary-2)); color: #fff; padding: 0.55rem 0.8rem; text-align: left; font-size: 0.76rem; }
+    .api-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e0e8f5; color: #2c4b76; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+    .api-table tr:nth-child(even) td { background: #f4f8ff; }
+    .m-get    { background: #1e6a35; color: #6df49a; font-size: 0.68rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 6px; }
+    .m-post   { background: #1a4a7a; color: #82b4ff; font-size: 0.68rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 6px; }
+
+    /* FOOTER */
+    .site-footer { text-align: center; color: var(--muted); padding: 3rem 1rem 2rem; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes floatBlobOne { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(22px,16px) scale(1.08); } }
+    @keyframes floatBlobTwo { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,-14px) scale(1.1); } }
+    @media (max-width: 640px) {
+      .case-hero { padding: 3rem 0 1.5rem; }
+      .tc-table, .sprint-table, .api-table { font-size: 0.73rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="container nav">
+      <a class="logo" href="index.html">W.A.Dewmi Umegha</a>
+      <a class="back-btn" href="index.html#projects">← Back to Portfolio</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="case-hero container">
+      <p class="case-eyebrow">Collaborative Development</p>
+      <h1>ORYN Campus Hub (On going project)</h1>
+      <p class="subtitle">A comprehensive student campus management portal built by a 6-person agile team — providing a unified digital space for bookings, events, services, and community engagement.</p>
+      <div class="tags">
+        <span>Node.js</span>
+        <span>Express.js</span>
+        <span>MySQL</span>
+        <span>HTML / CSS / JS</span>
+        <span>Jest</span>
+        <span>Cypress E2E</span>
+        <span>Jira</span>
+        <span>QA Engineering</span>
+        <span>Agile / Sprints</span>
+      </div>
+    </section>
+
+    <!-- MY ROLE BANNER -->
+    <section class="container">
+      <div class="role-banner">
+        <div class="role-badge">🧪 My Role</div>
+        <h3>Quality Assurance Engineer</h3>
+        <p>I was solely responsible for designing the entire QA strategy, writing all test cases, and executing functional, API, and end-to-end tests across all 5 sprints. My work ensured every feature met the acceptance criteria defined by the Business Analyst — from JWT authentication and bcrypt password security to GPS-based check-ins and campus club membership validation.</p>
+        <div class="role-pills">
+          <span class="role-pill">Test Plan Authoring</span>
+          <span class="role-pill">Jest Unit Testing</span>
+          <span class="role-pill">Cypress E2E Testing</span>         
+          <span class="role-pill">Bug Reporting </span>
+          <span class="role-pill">BA Requirements Traceability</span>
+          <span class="role-pill">Sprint Test Summary Reports</span>
+          
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- TEAM -->
+    <section class="container">
+      <div class="case-section">
+        <h2>👥 Team</h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="t-role">📋 Project Manager</div>
+            <div class="t-name">Medhani Niwoda</div>
+            <div class="t-sub">Documentation & Coordination</div>
+          </div>
+          <div class="team-card">
+            <div class="t-role">⚙️ Backend Developer</div>
+            <div class="t-name">Pulindu Balasooriya</div>
+            <div class="t-sub">Node.js / Express / API</div>
+          </div>
+          <div class="team-card">
+            <div class="t-role">🎨 Frontend Developer</div>
+            <div class="t-name">Sanduni Priyalakshi</div>
+            <div class="t-sub">HTML / CSS / UI Design</div>
+          </div>
+          <div class="team-card me">
+            <div class="t-role">🧪 QA Engineer</div>
+            <div class="t-name">Dewmi Umegha ← Me</div>
+            <div class="t-sub">Test Plan · Jest · Cypress · Bug Reports</div>
+          </div>
+          <div class="team-card">
+            <div class="t-role">🗄️ Database Admin</div>
+            <div class="t-name">Udara Nethmi</div>
+            <div class="t-sub">MySQL · Data Modeling</div>
+          </div>
+          <div class="team-card">
+            <div class="t-role">📊 Business Analyst</div>
+            <div class="t-name">Ginuka Weragoda</div>
+            <div class="t-sub">Requirements Gathering</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH STACK -->
+    <section class="container">
+      <div class="case-section">
+        <h2>🛠️ Tech Stack</h2>
+        <div class="tech-grid">
+          <div class="tech-card">
+            <div class="tc-label">Backend</div>
+            <div class="tc-item">Node.js <span>Runtime</span></div>
+            <div class="tc-item">Express.js <span>REST API Framework</span></div>
+            <div class="tc-item">mysql2 <span>DB Client</span></div>
+            <div class="tc-item">cors / dotenv <span>Middleware</span></div>
+            <div class="tc-item">bcrypt <span>Password Hashing</span></div>
+            <div class="tc-item">JWT <span>Authentication</span></div>
+          </div>
+          <div class="tech-card">
+            <div class="tc-label">Frontend</div>
+            <div class="tc-item">HTML5 <span>Structure</span></div>
+            <div class="tc-item">CSS3 <span>Styling & Animations</span></div>
+            <div class="tc-item">Vanilla JavaScript <span>Interactivity</span></div>
+            <div class="tc-item">Google Fonts <span>Typography</span></div>
+          </div>
+          <div class="tech-card">
+            <div class="tc-label">QA & Testing</div>
+            <div class="tc-item">Jest <span>Unit Testing</span></div>
+            <div class="tc-item">Cypress <span>E2E Testing</span></div>
+            <div class="tc-item">Postman <span>API Testing</span></div>
+            <div class="tc-item">MySQL Workbench <span>DB Validation</span></div>
+            <div class="tc-item">Chrome DevTools <span>Performance</span></div>
+            <div class="tc-item">Lighthouse <span>Accessibility</span></div>
+          </div>
+          <div class="tech-card">
+            <div class="tc-label">Project Management</div>
+            <div class="tc-item">Jira <span>Sprint / Issue Tracking</span></div>
+            <div class="tc-item">Trello <span>Kanban Board</span></div>
+            <div class="tc-item">Basecamp <span>Team Communication</span></div>
+            <div class="tc-item">GitHub <span>Version Control</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="container">
+      <div class="case-section">
+        <h2>✨ Application Modules</h2>
+        <div class="feature-grid">
+          <div class="feature-card"><div class="fi">🏠</div><div class="ft">Home Portal</div></div>
+          <div class="feature-card"><div class="fi">🔐</div><div class="ft">Student Login (JWT)</div></div>
+          <div class="feature-card"><div class="fi">📝</div><div class="ft">Student Registration</div></div>
+          <div class="feature-card"><div class="fi">📅</div><div class="ft">Facility Booking</div></div>
+          <div class="feature-card"><div class="fi">🎉</div><div class="ft">Campus Events</div></div>
+          <div class="feature-card"><div class="fi">📚</div><div class="ft">Digital Library</div></div>
+          <div class="feature-card"><div class="fi">☕</div><div class="ft">ORYN Café Menu</div></div>
+          <div class="feature-card"><div class="fi">🏋️</div><div class="ft">Fitness Centre</div></div>
+          <div class="feature-card"><div class="fi">🏛️</div><div class="ft">Clubs & Societies</div></div>
+          <div class="feature-card"><div class="fi">🗺️</div><div class="ft">Campus Map</div></div>
+          <div class="feature-card"><div class="fi">🚌</div><div class="ft">Transit & Bus Routes</div></div>
+          <div class="feature-card"><div class="fi">🛒</div><div class="ft">Student Marketplace</div></div>
+          <div class="feature-card"><div class="fi">🎁</div><div class="ft">Rewards System</div></div>
+          <div class="feature-card"><div class="fi">💼</div><div class="ft">Careers Board</div></div>
+          <div class="feature-card"><div class="fi">💬</div><div class="ft">Social Feedback</div></div>
+          <div class="feature-card"><div class="fi">ℹ️</div><div class="ft">About Campus</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QA TESTING -->
+    <section class="container">
+      <div class="case-section">
+        <h2>🧪 My QA Work — Testing Evidence</h2>
+        <p>I individually designed and executed all testing across the project. Below are the testing artifacts I produced as QA Engineer.</p>
+
+        <h3 style="margin:1.2rem 0 0.5rem;font-size:1.05rem;color:var(--primary);">Jest Unit Tests — 29/29 Passed</h3>
+        <p style="margin-bottom:0.7rem;">I wrote 29 Jest unit tests covering all backend API endpoints without a live database — testing validation, error handling, and security (bcrypt, JWT, 404 routing).</p>
+        <div class="media-block">
+          <img src="assets\jest.jpeg" alt="Jest 29/29 tests passing">
+        </div>
+
+        <h3 style="margin:1.2rem 0 0.5rem;font-size:1.05rem;color:var(--primary);">Cypress E2E Tests — 17/17 Pages Passed</h3>
+        <p style="margin-bottom:0.7rem;">I wrote Cypress end-to-end tests to verify that all 17 frontend pages load correctly in a real browser environment, simulating actual student user flows.</p>
+        <div class="media-block">
+          <img src="assets\cypress tests passed.PNG" alt="Cypress 17/17 tests passing">
+        </div>
+      </div>
+    </section>
+
+    <!-- QA TOOLS -->
+    <section class="container">
+      <div class="case-section">
+        <h2>🔧 QA Tools Used</h2>
+        <div class="qa-tools-grid">
+          <div class="qa-tool-card">
+            <div class="tool-name">Jest</div>
+            <div class="tool-cat">Unit Testing · Sprint 1–2</div>
+            <div class="tool-desc">Tested Node.js backend functions — JWT token generation, bcrypt hashing, GPS validation, and input validation without a live DB.</div>
+          </div>
+          <div class="qa-tool-card">
+            <div class="tool-name">Cypress</div>
+            <div class="tool-cat">E2E Testing · Sprint 3–5</div>
+            <div class="tool-desc">Automated full student journeys: page load tests, login flows, check-in, rewards, and club join simulations in a real browser.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> W.A.Dewmi Umegha. All rights reserved.</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run & Think | Dewmi Umegha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #eef3ff; --bg-soft: #e8f6ff; --surface: #ffffff;
+      --text: #11223f; --muted: #35537f;
+      --primary: #4656d9; --primary-2: #1e97d6; --accent: #6675ff;
+      --border: #c7d5ef;
+      --shadow: 0 18px 40px rgba(63, 98, 178, 0.16);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; font-family: Inter, system-ui, sans-serif;
+      color: var(--text); line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, #dde8ff 0, rgba(221,232,255,0) 46%),
+        radial-gradient(circle at 100% 0%, #daf2ff 0, rgba(218,242,255,0) 40%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 100%);
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: ""; position: fixed;
+      width: 280px; height: 280px; border-radius: 50%;
+      filter: blur(4px); z-index: -1; opacity: 0.55;
+    }
+    body::before { top: -60px; left: -60px; background: radial-gradient(circle, #d8e4ff 0%, rgba(216,228,255,0) 72%); animation: floatBlobOne 12s ease-in-out infinite; }
+    body::after { right: -70px; bottom: -60px; background: radial-gradient(circle, #cceeff 0%, rgba(204,238,255,0) 72%); animation: floatBlobTwo 14s ease-in-out infinite; }
+    .container { width: min(1020px, 92%); margin: 0 auto; }
+    .site-header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background-color: rgba(255,255,255,0.88); border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 68px; gap: 0.65rem; }
+    .logo { text-decoration: none; font-weight: 800; font-size: 1.12rem; background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 180% 180%; animation: gradientMove 6s ease infinite; }
+    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; color: var(--muted); font-weight: 600; border: 1px solid var(--border); background: #ebf2ff; padding: 0.45rem 0.9rem; border-radius: 10px; transition: color 0.2s, box-shadow 0.2s; }
+    .back-btn:hover { color: var(--primary); box-shadow: 0 4px 12px rgba(70,86,217,0.15); }
+    .case-hero { padding: 5rem 0 2.5rem; animation: fadeUp 0.8s ease both; }
+    .case-eyebrow { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .case-hero h1 { margin: 0 0 0.7rem; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; background: linear-gradient(95deg, #4338ca 0%, #4f46e5 45%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% auto; animation: gradientMove 7s ease infinite; }
+    .case-hero .subtitle { color: #1c3f6f; font-size: 1.05rem; font-weight: 600; max-width: 620px; margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .tags span { background: linear-gradient(120deg, #e6eeff, #def2ff); border: 1px solid #bdd0ef; color: #1a3b68; font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 999px; }
+    .media-block { width: 100%; border-radius: 18px; background: linear-gradient(145deg, #e6eeff 0%, #d8f0ff 100%); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 2rem; }
+    .media-block img, .media-block video { width: 100%; display: block; border-radius: 18px; }
+    .media-placeholder { width: 100%; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; color: var(--muted); font-weight: 600; }
+    .media-placeholder .icon { font-size: 3.5rem; opacity: 0.5; }
+    .media-placeholder p { margin: 0; font-size: 0.95rem; }
+    .media-placeholder small { color: #7a9cc0; font-size: 0.8rem; }
+    .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .media-grid .media-block { margin-bottom: 0; }
+    .media-grid .media-placeholder { height: 220px; }
+    .media-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .media-grid-3 .media-block { margin-bottom: 0; }
+    .media-grid-3 .media-placeholder { height: 180px; }
+    .case-section { background: linear-gradient(140deg, rgba(255,255,255,0.93), rgba(238,245,255,0.95)); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; box-shadow: var(--shadow); margin-bottom: 1.4rem; position: relative; overflow: hidden; }
+    .case-section::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); opacity: 0.75; }
+    .case-section h2 { margin: 0 0 1rem; font-size: 1.35rem; }
+    .case-section p { color: #2c4b76; margin: 0.5rem 0; }
+    .case-section ul { padding-left: 1.4rem; color: #2c4b76; margin: 0.5rem 0; }
+    .case-section ul li { margin-bottom: 0.4rem; }
+    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .highlight-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem; text-align: center; }
+    .highlight-card .num { font-size: 2rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .highlight-card p { margin: 0.3rem 0 0; font-size: 0.88rem; color: var(--muted); font-weight: 600; }
+    .role-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .role-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem; }
+    .role-card h4 { margin: 0 0 0.5rem; color: var(--primary); font-size: 1rem; }
+    .role-card p { margin: 0; font-size: 0.88rem; color: var(--muted); }
+    .site-footer { text-align: center; color: var(--muted); padding: 3rem 1rem 2rem; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes floatBlobOne { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(22px,16px) scale(1.08); } }
+    @keyframes floatBlobTwo { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,-14px) scale(1.1); } }
+    @media (max-width: 600px) { .media-grid, .media-grid-3 { grid-template-columns: 1fr; } .case-hero { padding: 3rem 0 1.5rem; } }
+
+    .media-block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* full cover */
+  display: block;
+}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container nav">
+      <a class="logo" href="index.html">W.A.Dewmi Umegha</a>
+      <a class="back-btn" href="index.html#projects">← Back to Portfolio</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="case-hero container">
+      <p class="case-eyebrow">Interactive 3D Applications and Academic Skills</p>
+      <h1>Run & Think 3D  Game</h1>
+      <p class="subtitle">A 3D educational puzzle runner game built in Unity, designed to make learning fun by combining gameplay with math and logic challenges.</p>
+      <div class="tags">
+        <span>Unity 3D</span>
+        <span>C#</span>
+        <span>Game Design</span>
+        <span>3D Development</span>
+        <span>Educational Game</span>
+      </div>
+    </section>
+
+    <section class="container">
+  <div class="media-block">
+
+    <iframe 
+  width="100%" 
+  height="400" 
+  src="https://www.youtube.com/embed/e3EfF0ZRICs" 
+  frameborder="0" 
+  allowfullscreen>
+</iframe>
+
+  </div>
+</section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>📋 Project Overview</h2>
+        <p>
+          <strong>Run & Think</strong> is a 3D infinite-runner style game developed in Unity using C#. The player controls a character who must run, jump, and dodge obstacles — but with a twist: to progress or gain power-ups, players must answer math and logic questions correctly. Wrong answers result in obstacles or penalties.
+        </p>
+        <p>The game was designed to make learning engaging for younger audiences by embedding educational content inside an exciting gameplay loop.</p>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="num">3D</div>
+            <p>Built in Unity 3D</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">C#</div>
+            <p>Scripted in C#</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">Edu</div>
+            <p>Educational Game</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">Fun</div>
+            <p>Gamified Learning</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>🎯 Concept & Purpose</h2>
+        <p>The idea behind Run & Think was to tackle a common problem: students find traditional learning boring. By embedding quiz questions into a fast-paced runner game, the goal was to create a situation where players are motivated to think quickly and correctly — making knowledge recall feel natural and rewarding.</p>
+        <p>The game targets primary and lower secondary school students and focuses on mental arithmetic and logical reasoning skills.</p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>⚙️ Key Features</h2>
+        <ul>
+          <li>3D endless runner mechanics — run, jump, slide, and dodge</li>
+          <li>Math quiz pop-ups appear at key checkpoints — answer correctly to continue</li>
+          <li>Wrong answers trigger in-game penalties (slow down, obstacle spawn)</li>
+          <li>Progressive difficulty — questions get harder as the player advances</li>
+          <li>Score system based on distance covered and correct answers</li>
+          <li>Simple, child-friendly UI with bright colors and animations</li>
+          <li>Background music and sound effects for immersive experience</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>🛠️ Development Process</h2>
+        <p>The game was built entirely in Unity using C# scripts. Key systems developed include:</p>
+        <div class="role-cards">
+          <div class="role-card">
+            <h4>🎮 Player Controller</h4>
+            <p>Handles movement, jumping, sliding, and collision detection using Unity's Rigidbody physics.</p>
+          </div>
+          <div class="role-card">
+            <h4>🔀 Level Generator</h4>
+            <p>Procedurally generates track segments and obstacles to create an infinite play experience.</p>
+          </div>
+          <div class="role-card">
+            <h4>❓ Quiz System</h4>
+            <p>Randomly selects and displays math questions; validates answers and triggers game events accordingly.</p>
+          </div>
+          <div class="role-card">
+            <h4>🏆 Score Manager</h4>
+            <p>Tracks and displays player score based on distance, correct answers, and speed milestones.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="container">
+      <div class="case-section">
+        <h2>💡 Challenges & Learnings</h2>
+        <p>The biggest challenge was designing the quiz timing — interrupting the game flow with a question without frustrating the player. I experimented with several approaches before landing on a system where the quiz appears at natural pause points (checkpoint gates), giving the player a brief moment to answer.</p>
+        <p>
+          Building this game significantly improved my skills in Unity's physics system, UI canvas management, C# coroutines, and procedural content generation. It was my first complete 3D game project, and it taught me how to plan game architecture before writing code.
+        </p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>🚀 Future Improvements</h2>
+        <ul>
+          <li>Add more subject categories (science, language, history)</li>
+          <li>Implement user accounts and leaderboards</li>
+          <li>Add character customization and unlockable skins</li>
+          <li>Port to Android/iOS using Unity's mobile build pipeline</li>
+          <li>Include a teacher dashboard for tracking student progress</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom: 4rem;">
+      <div class="case-section">
+        <h2>🔗 Links</h2>
+        <p>
+          <strong>GitHub Repository:</strong>
+          <a href="https://github.com/dewmiumegha-lab/Run-And-Think" target="_blank" rel="noreferrer" style="color: var(--primary); font-weight: 600; text-decoration: none;">
+            github.com/dewmiumegha-lab
+          </a>
+        
+          
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> W.A.Dewmi Umegha. All rights reserved.</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

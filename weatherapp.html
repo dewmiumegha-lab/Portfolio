@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App | Dewmi Umegha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #eef3ff;
+      --bg-soft: #e8f6ff;
+      --surface: #ffffff;
+      --surface-2: #f1f6ff;
+      --text: #11223f;
+      --muted: #35537f;
+      --primary: #4656d9;
+      --primary-2: #1e97d6;
+      --accent: #6675ff;
+      --border: #c7d5ef;
+      --shadow: 0 18px 40px rgba(63, 98, 178, 0.16);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+      background:
+        radial-gradient(circle at 0% 0%, #dde8ff 0, rgba(221,232,255,0) 46%),
+        radial-gradient(circle at 100% 0%, #daf2ff 0, rgba(218,242,255,0) 40%),
+        linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 100%);
+      overflow-x: hidden;
+    }
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      filter: blur(4px);
+      z-index: -1;
+      opacity: 0.55;
+    }
+    body::before {
+      top: -60px; left: -60px;
+      background: radial-gradient(circle, #d8e4ff 0%, rgba(216,228,255,0) 72%);
+      animation: floatBlobOne 12s ease-in-out infinite;
+    }
+    body::after {
+      right: -70px; bottom: -60px;
+      background: radial-gradient(circle, #cceeff 0%, rgba(204,238,255,0) 72%);
+      animation: floatBlobTwo 14s ease-in-out infinite;
+    }
+    .container { width: min(1020px, 92%); margin: 0 auto; }
+
+    /* HEADER */
+    .site-header {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(8px);
+      background-color: rgba(255,255,255,0.88);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      min-height: 68px; gap: 0.65rem;
+    }
+    .logo {
+      text-decoration: none; font-weight: 800; font-size: 1.12rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      background-size: 180% 180%;
+      animation: gradientMove 6s ease infinite;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      text-decoration: none; color: var(--muted); font-weight: 600;
+      border: 1px solid var(--border); background: #ebf2ff;
+      padding: 0.45rem 0.9rem; border-radius: 10px;
+      transition: color 0.2s, box-shadow 0.2s;
+    }
+    .back-btn:hover { color: var(--primary); box-shadow: 0 4px 12px rgba(70,86,217,0.15); }
+
+    /* HERO */
+    .case-hero {
+      padding: 5rem 0 2.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .case-eyebrow {
+      color: var(--primary); font-weight: 700;
+      font-size: 0.9rem; margin-bottom: 0.5rem;
+    }
+    .case-hero h1 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      background: linear-gradient(95deg, #4338ca 0%, #4f46e5 45%, #0284c7 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      background-size: 200% auto;
+      animation: gradientMove 7s ease infinite;
+    }
+    .case-hero .subtitle {
+      color: #1c3f6f; font-size: 1.05rem; font-weight: 600;
+      max-width: 620px; margin-bottom: 1.2rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .tags span {
+      background: linear-gradient(120deg, #e6eeff, #def2ff);
+      border: 1px solid #bdd0ef; color: #1a3b68;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.35rem 0.75rem; border-radius: 999px;
+    }
+
+    /* MEDIA PLACEHOLDER */
+    .media-block {
+      width: 100%; border-radius: 18px;
+      background: linear-gradient(145deg, #e6eeff 0%, #d8f0ff 100%);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden; margin-bottom: 2rem;
+      position: relative;
+    }
+    .media-block img, .media-block video {
+      width: 100%; display: block; border-radius: 18px;
+    }
+    .media-placeholder {
+      width: 100%; height: 380px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem; color: var(--muted); font-weight: 600;
+    }
+    .media-placeholder .icon { font-size: 3.5rem; opacity: 0.5; }
+    .media-placeholder p { margin: 0; font-size: 0.95rem; }
+    .media-placeholder small { color: #7a9cc0; font-size: 0.8rem; }
+
+    .media-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;
+    }
+    .media-grid .media-block { margin-bottom: 0; }
+    .media-grid .media-placeholder { height: 220px; }
+
+    /* CONTENT SECTIONS */
+    .case-section {
+      background: linear-gradient(140deg, rgba(255,255,255,0.93), rgba(238,245,255,0.95));
+      border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.8rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.4rem;
+      position: relative; overflow: hidden;
+    }
+    .case-section::before {
+      content: ""; position: absolute;
+      left: 0; top: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      opacity: 0.75;
+    }
+    .case-section h2 { margin: 0 0 1rem; font-size: 1.35rem; }
+    .case-section p { color: #2c4b76; margin: 0.5rem 0; }
+    .case-section ul {
+      padding-left: 1.4rem; color: #2c4b76; margin: 0.5rem 0;
+    }
+    .case-section ul li { margin-bottom: 0.4rem; }
+
+    /* 3-col highlights */
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem; margin-top: 1rem;
+    }
+    .highlight-card {
+      background: linear-gradient(145deg, #fff 0%, #edf5ff 100%);
+      border: 1px solid #cbdaef; border-radius: 14px;
+      padding: 1.1rem; text-align: center;
+    }
+    .highlight-card .num {
+      font-size: 2rem; font-weight: 800; color: var(--primary);
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .highlight-card p { margin: 0.3rem 0 0; font-size: 0.88rem; color: var(--muted); font-weight: 600; }
+
+    /* code block */
+    .code-block {
+      background: #1a2744; color: #a8d1ff;
+      border-radius: 12px; padding: 1.2rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem; line-height: 1.7;
+      overflow-x: auto; margin: 0.8rem 0;
+    }
+    .code-block .comment { color: #5a7fa8; }
+    .code-block .keyword { color: #82b4ff; }
+    .code-block .string { color: #80e4b0; }
+
+    /* FOOTER */
+    .site-footer {
+      text-align: center; color: var(--muted); padding: 3rem 1rem 2rem;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes floatBlobOne {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(22px,16px) scale(1.08); }
+    }
+    @keyframes floatBlobTwo {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-20px,-14px) scale(1.1); }
+    }
+    @media (max-width: 600px) {
+      .media-grid { grid-template-columns: 1fr; }
+      .case-hero { padding: 3rem 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="container nav">
+      <a class="logo" href="index.html">W.A.Dewmi Umegha</a>
+      <a class="back-btn" href="index.html#projects">← Back to Portfolio</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="case-hero container">
+      <p class="case-eyebrow">Internet Software Architecture and Databases</p>
+      <h1>Weather App</h1>
+      <p class="subtitle">A real-time weather application built with HTML, CSS, and JavaScript using a public weather API.</p>
+      <div class="tags">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>REST API</span>
+        <span>Responsive Design</span>
+      </div>
+    </section>
+
+    <section class="container">
+      <!-- MAIN SCREENSHOT / VIDEO -->
+      <div class="media-block">
+        <!-- Replace the placeholder below with your actual screenshot or video:
+             For image: <img src="assets/weatherapp-main.png" alt="Weather App Screenshot">
+             For video: <video src="assets/weatherapp-demo.mp4" controls></video>
+        -->
+        <div class="media-placeholder">
+          <span class="icon">🌤️</span>
+          <p>Add your main screenshot or screen recording here</p>
+          <img src="assets\weatherapp.png" alt="Profile photo of Your Name" class="about-image">
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>📋 Project Overview</h2>
+        <p>
+          This Weather App allows users to search for any city and instantly view current weather conditions including temperature, humidity, wind speed, and weather description. The app fetches live data from a public weather API and displays it in a clean, user-friendly interface.
+        </p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>🎯 Problem Statement</h2>
+        <p>The goal of this project was to create a useful web app that shows how to get data from external APIs. It also demonstrates how to use JavaScript to handle tasks in the background and display live weather information in a clean, professional design. Building a weather app is a perfect way to practice these essential front-end development skills.</p>
+          
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>⚙️ Features</h2>
+        <ul>
+          <li>Search any city worldwide to get current weather</li>
+          <li>Displays temperature (°C / °F), humidity, and wind speed</li>
+          <li>Dynamic weather icons that change based on conditions (sunny, rainy, cloudy, etc.)</li>
+          <li>Error handling for invalid city names</li>
+          
+        </ul>
+      </div>
+    </section>
+
+    
+
+    <section class="container">
+      <div class="case-section">
+        <h2>🛠️ Tech Stack & How It Works</h2>
+        <p>The app is built with plain HTML, CSS, and JavaScript — no frameworks needed. It calls the OpenWeatherMap API to fetch weather data based on the user's search input.</p>
+        <div class="code-block">
+<span class="comment">// Fetch weather data from OpenWeatherMap API</span>
+<span class="keyword">async function</span> getWeather(city) {
+  <span class="keyword">const</span> url = <span class="string">`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`</span>;
+  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(url);
+  <span class="keyword">const</span> data = <span class="keyword">await</span> response.json();
+  displayWeather(data);
+}
+        </div>
+        <ul>
+          <li><strong>HTML</strong> — Page structure and layout</li>
+          <li><strong>CSS</strong> — Styling, animations, and responsive grid</li>
+          <li><strong>JavaScript (async/await)</strong> — API calls, DOM manipulation, error handling</li>
+          <li><strong>OpenWeatherMap API</strong> — Live weather data source</li>
+        </ul>
+      </div>
+    </section>
+
+    
+
+    <section class="container">
+      <div class="case-section">
+        <h2>💡 Challenges & Learnings</h2>
+        <p>
+          One of the main challenges was handling API errors gracefully — for example, when a user types an incorrect city name. I implemented try/catch blocks and conditional checks on the API response status code to show user-friendly error messages instead of crashing the app.
+        </p>
+        <p>
+          I also learned how to work with asynchronous JavaScript using <strong>async/await</strong> and how to dynamically update the DOM based on API response data. This project significantly improved my understanding of how real-world web apps consume external services.
+        </p>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section">
+        <h2>🚀 Future Improvements</h2>
+        <ul>
+          <li>Add a 5-day weather forecast section</li>
+          <li>Include geolocation support to auto-detect user's city</li>
+          <li>Add dark/light mode toggle</li>
+          <li>Display air quality index (AQI) data</li>
+          <li>Save recently searched cities using localStorage</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom: 4rem;">
+      <div class="case-section">
+        <h2>🔗 Links</h2>
+        <p>
+          <strong>GitHub Repository:</strong>
+          <a href="https://github.com/dewmiumegha-lab/weatherapp" target="_blank" rel="noreferrer" style="color: var(--primary); font-weight: 600; text-decoration: none;">
+            github.com/dewmiumegha-lab
+          </a>
+          &nbsp;·&nbsp;
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> W.A.Dewmi Umegha. All rights reserved.</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
