@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="assets/favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App | Dewmi Umegha</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
   <style>
     :root {
       --bg: #eef3ff;
@@ -245,19 +247,12 @@
     </section>
 
     <section class="container">
-      <!-- MAIN SCREENSHOT / VIDEO -->
-      <div class="media-block">
-        <!-- Replace the placeholder below with your actual screenshot or video:
-             For image: <img src="assets/weatherapp-main.png" alt="Weather App Screenshot">
-             For video: <video src="assets/weatherapp-demo.mp4" controls></video>
-        -->
-        <div class="media-placeholder">
-          
-          
-          <img src="assets\weatherapp.png" alt="Profile photo of Your Name" class="about-image">
-        </div>
-      </div>
-    </section>
+  <div class="media-grid">
+    <div class="media-block">
+      <img src="assets/weatherapp.PNG" alt="Weather App screenshot">
+    </div>
+  </div>
+</section>
 
     <section class="container">
       <div class="case-section">
@@ -358,5 +353,6 @@
     <p>&copy; <span id="year"></span> W.A.Dewmi Umegha. All rights reserved.</p>
   </footer>
   <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+   <script src="script.js"></script>
 </body>
 </html>
