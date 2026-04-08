@@ -362,12 +362,13 @@ h2 {
 }
 
 .about-image-wrap {
-  width: 200px;   /* podi kala */
-  height: 250px;  /* podi kala */
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid #4f46e5;
-   margin-top: -30px;
+  margin-top: -30px;
+  flex-shrink: 0;
 }
 
 .about-image {
@@ -477,15 +478,18 @@ h2 {
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.45rem;
+  margin: 0.75rem 0;
 }
 
 .project-tags span {
-  background: #f3f4f6;
-  color: #374151;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1a3d6f;
+  border: 1px solid #c2d2ef;
+  background: #e8f2ff;
+  padding: 0.28rem 0.52rem;
+  border-radius: 999px;
 }
 
 .project-card a {
@@ -501,25 +505,6 @@ h2 {
 
 .project-card a:hover {
   background: #333;
-}
-
-
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin: 0.75rem 0;
-}
-
-.project-tags span {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #1a3d6f;
-  border: 1px solid #c2d2ef;
-  background: #e8f2ff;
-  padding: 0.28rem 0.52rem;
-  border-radius: 999px;
 }
 
 .about-image-wrap::after,
@@ -770,10 +755,19 @@ h2 {
 
   .about-layout {
     grid-template-columns: 1fr;
+    justify-items: center;
   }
 
-  .about-image {
-    height: 300px;
+  .about-image-wrap {
+    width: 200px;
+    height: 200px;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-content {
+    width: 100%;
+    text-align: left;
   }
 
   .section-head {
@@ -827,4 +821,53 @@ h2 {
   .chips {
     gap: 0.4rem;
   }
+}
+
+/* ===== LIGHTBOX ===== */
+#lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  cursor: zoom-out;
+}
+#lightbox-overlay.active {
+  display: flex;
+}
+#lb-img {
+  max-width: 95vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  object-fit: contain;
+  cursor: default;
+  animation: lbFadeIn 0.2s ease;
+}
+#lb-close {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10000;
+}
+#lb-close:hover { background: rgba(255,255,255,0.25); }
+@keyframes lbFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
 }
