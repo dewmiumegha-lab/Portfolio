@@ -132,3 +132,44 @@ if (introPopup) {
   });
 }
 
+// ===== LIGHTBOX =====
+(function () {
+  const overlay = document.createElement('div');
+  overlay.id = 'lightbox-overlay';
+  overlay.innerHTML = `
+    <button id="lb-close" aria-label="Close">&times;</button>
+    <img id="lb-img" src="" alt="">
+  `;
+  document.body.appendChild(overlay);
+
+  function initLightbox() {
+    document.querySelectorAll('.media-block img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        document.getElementById('lb-img').src = img.src;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+  }
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.id === 'lb-close') {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLightbox);
+  } else {
+    initLightbox();
+  }
+})();
