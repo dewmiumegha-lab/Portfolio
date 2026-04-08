@@ -363,7 +363,7 @@ h2 {
 
 .about-image-wrap {
   width: 200px;
-  height: 200px;
+  height: 250px;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid #4f46e5;
@@ -760,7 +760,7 @@ h2 {
 
   .about-image-wrap {
     width: 200px;
-    height: 200px;
+    height: 250px;
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
