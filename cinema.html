@@ -5,182 +5,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cinema Booking System | Dewmi Umegha</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --bg: #eef3ff; --bg-soft: #e8f6ff; --surface: #ffffff;
-      --text: #11223f; --muted: #35537f;
-      --primary: #4656d9; --primary-2: #1e97d6; --accent: #6675ff;
-      --border: #c7d5ef;
-      --shadow: 0 18px 40px rgba(63, 98, 178, 0.16);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; font-family: Inter, system-ui, sans-serif;
-      color: var(--text); line-height: 1.6;
-      background:
-        radial-gradient(circle at 0% 0%, #dde8ff 0, rgba(221,232,255,0) 46%),
-        radial-gradient(circle at 100% 0%, #daf2ff 0, rgba(218,242,255,0) 40%),
-        linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 100%);
-      overflow-x: hidden;
-    }
-    body::before, body::after {
-      content: ""; position: fixed;
-      width: 280px; height: 280px; border-radius: 50%;
-      filter: blur(4px); z-index: -1; opacity: 0.55;
-    }
-    body::before { top:-60px; left:-60px; background: radial-gradient(circle, #d8e4ff 0%, rgba(216,228,255,0) 72%); animation: floatBlobOne 12s ease-in-out infinite; }
-    body::after  { right:-70px; bottom:-60px; background: radial-gradient(circle, #cceeff 0%, rgba(204,238,255,0) 72%); animation: floatBlobTwo 14s ease-in-out infinite; }
+    /* PAGE-SPECIFIC EXTRAS */
+    
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .highlight-card{background:rgba(245,200,66,0.04);border:1px solid var(--border);padding:1rem 1.4rem;text-align:center;min-width:90px;flex:1;}
+    .highlight-card .num{font-family:"Orbitron",monospace;font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:.3rem;}
+    .highlight-card p{font-size:.78rem;color:var(--muted);letter-spacing:1px;margin:0;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+    .feature-card{background:rgba(245,200,66,0.03);border:1px solid var(--border);padding:1.1rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .feat-icon{font-size:1.5rem;flex-shrink:0;}
+    .feature-card h4{font-family:"Orbitron",monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;letter-spacing:1px;}
+    .feature-card p{font-size:.85rem;color:var(--muted);margin:0;}
 
-    .container { width: min(1020px, 92%); margin: 0 auto; }
+    .console-block{background:#020408;border:1px solid rgba(245,200,66,0.2);padding:1.4rem;font-family:"Courier New",monospace;font-size:.82rem;line-height:2;margin:.75rem 0;white-space:pre-wrap;}
+    .c-title{color:var(--gold);font-weight:700;font-size:.88rem;display:block;}
+    .c-head{color:var(--gold2);font-weight:700;display:block;margin-top:.5rem;}
+    .c-num{color:#4ade80;}
+    .c-dim{color:var(--muted);}
+    .api-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.85rem;}
+    .api-table th{background:rgba(245,200,66,0.07);color:var(--gold2);font-family:"Orbitron",monospace;font-size:.7rem;letter-spacing:1px;padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--border);}
+    .api-table td{padding:.6rem .9rem;border-bottom:1px solid rgba(245,200,66,0.06);color:var(--muted);vertical-align:top;}
+    .api-table td:first-child{font-family:"Courier New",monospace;color:#4ade80;font-size:.8rem;}
+    .api-table td:nth-child(2){color:var(--gold2);font-size:.8rem;}
+    .method-get{color:#4ade80;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+    .method-post{color:#f59e0b;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+    .method-put{color:#60a5fa;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+    .method-del{color:#f87171;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
 
-    /* HEADER */
-    .site-header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background-color: rgba(255,255,255,0.88); border-bottom: 1px solid var(--border); }
-    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 68px; gap: 0.65rem; }
-    .logo { text-decoration: none; font-weight: 800; font-size: 1.12rem; background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 180%; animation: gradientMove 6s ease infinite; }
-    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; color: var(--muted); font-weight: 600; border: 1px solid var(--border); background: #ebf2ff; padding: 0.45rem 0.9rem; border-radius: 10px; transition: color 0.2s, box-shadow 0.2s; }
-    .back-btn:hover { color: var(--primary); box-shadow: 0 4px 12px rgba(70,86,217,0.15); }
-
-    /* HERO */
-    .case-hero { padding: 5rem 0 2.5rem; animation: fadeUp 0.8s ease both; }
-    .case-eyebrow { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .case-hero h1 { margin: 0 0 0.7rem; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; background: linear-gradient(95deg, #4338ca 0%, #4f46e5 45%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% auto; animation: gradientMove 7s ease infinite; }
-    .subtitle { color: #1c3f6f; font-size: 1.05rem; font-weight: 600; max-width: 700px; margin-bottom: 1.2rem; }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .tags span { background: linear-gradient(120deg, #e6eeff, #def2ff); border: 1px solid #bdd0ef; color: #1a3b68; font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 999px; }
-
-    /* MEDIA */
-    .media-block { width: 100%; border-radius: 18px; background: linear-gradient(145deg, #e6eeff, #d8f0ff); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 2rem; }
-    .media-block img, .media-block video { width: 100%; display: block; border-radius: 18px; }
-    .media-placeholder { width: 100%; height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; color: var(--muted); font-weight: 600; }
-    .media-placeholder .icon { font-size: 3.5rem; opacity: 0.5; }
-    .media-placeholder p { margin: 0; font-size: 0.95rem; }
-    .media-placeholder small { color: #7a9cc0; font-size: 0.8rem; }
-    .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    .media-grid .media-block { margin-bottom: 0; }
-    .media-grid .media-placeholder { height: 0px; }
-
-    /* SECTIONS */
-    .case-section { background: linear-gradient(140deg, rgba(255,255,255,0.93), rgba(238,245,255,0.95)); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; box-shadow: var(--shadow); margin-bottom: 1.4rem; position: relative; overflow: hidden; }
-    .case-section::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); opacity: 0.75; }
-    .case-section h2 { margin: 0 0 1rem; font-size: 1.35rem; }
-    .case-section p { color: #2c4b76; margin: 0.5rem 0; }
-    .case-section ul { padding-left: 1.4rem; color: #2c4b76; margin: 0.5rem 0; }
-    .case-section ul li { margin-bottom: 0.4rem; }
-
-    /* HIGHLIGHTS */
-    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .highlight-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1rem; text-align: center; }
-    .highlight-card .num { font-size: 1.7rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .highlight-card p { margin: 0.3rem 0 0; font-size: 0.82rem; color: var(--muted); font-weight: 600; }
-
-    /* FEATURE GRID */
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .feature-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem 1.2rem; display: flex; gap: 0.85rem; align-items: flex-start; }
-    .feature-card .feat-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .feature-card h4 { margin: 0 0 0.3rem; font-size: 0.95rem; color: var(--primary); }
-    .feature-card p { margin: 0; font-size: 0.84rem; color: var(--muted); line-height: 1.5; }
-
-    /* ARCHITECTURE — 3-layer diagram */
-    .arch-layers { display: grid; gap: 0.7rem; margin-top: 1rem; }
-    .arch-layer { border-radius: 12px; padding: 0.9rem 1.2rem; display: flex; align-items: center; gap: 1rem; }
-    .arch-layer.l1 { background: linear-gradient(90deg, #4656d9 0%, #6675ff 100%); color: #fff; }
-    .arch-layer.l2 { background: linear-gradient(90deg, #1e7dd6 0%, #1e97d6 100%); color: #fff; }
-    .arch-layer.l3 { background: linear-gradient(90deg, #0f5fa8 0%, #1577c2 100%); color: #fff; }
-    .arch-layer.l4 { background: #1a2744; color: #a8d1ff; }
-    .arch-layer .layer-label { font-weight: 800; font-size: 0.85rem; min-width: 130px; opacity: 0.85; }
-    .arch-layer .layer-items { font-size: 0.85rem; opacity: 0.95; }
-
-    /* CLASS CARDS */
-    .class-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .class-card { background: #1a2744; border-radius: 14px; padding: 1.2rem; position: relative; overflow: hidden; }
-    .class-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); }
-    .class-card .class-name { font-weight: 800; font-size: 1rem; color: #82b4ff; margin-bottom: 0.2rem; }
-    .class-card .class-extends { font-size: 0.73rem; color: #5a7fa8; margin-bottom: 0.8rem; font-style: italic; }
-    .class-card .class-label { font-size: 0.68rem; font-weight: 700; color: #5a7fa8; text-transform: uppercase; letter-spacing: 0.06em; margin: 0.55rem 0 0.25rem; }
-    .class-card .field  { font-family: 'Courier New', monospace; font-size: 0.78rem; color: #a8d1ff; padding: 0.1rem 0; }
-    .class-card .method { font-family: 'Courier New', monospace; font-size: 0.78rem; color: #80e4b0; padding: 0.1rem 0; }
-
-    /* DB SCHEMA */
-    .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .db-table { background: #1a2744; border-radius: 14px; overflow: hidden; }
-    .db-table-header { background: linear-gradient(90deg, var(--primary), var(--primary-2)); padding: 0.6rem 1rem; font-weight: 800; font-size: 0.88rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
-    .db-table-body { padding: 0.8rem 1rem; }
-    .db-col { font-family: 'Courier New', monospace; font-size: 0.78rem; padding: 0.18rem 0; display: flex; gap: 0.5rem; align-items: center; }
-    .db-col .col-name { color: #a8d1ff; }
-    .db-col .col-type { color: #80e4b0; font-size: 0.72rem; }
-    .db-col .col-pk   { color: #ffd580; font-size: 0.68rem; font-weight: 700; }
-    .db-col .col-fk   { color: #ffb380; font-size: 0.68rem; font-weight: 700; }
-
-    /* REST ENDPOINTS */
-    .endpoint-list { display: grid; gap: 0.6rem; margin-top: 1rem; }
-    .endpoint { display: flex; align-items: center; gap: 0.75rem; background: #1a2744; border-radius: 10px; padding: 0.65rem 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; color: #a8d1ff; }
-    .method-badge { font-weight: 800; font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; min-width: 52px; text-align: center; }
-    .get    { background: #1e6a35; color: #6df49a; }
-    .post   { background: #1a4a7a; color: #82b4ff; }
-    .delete { background: #6a1e1e; color: #ff9494; }
-
-    /* MENU CONSOLE */
-    .console-block { background: #0d1117; border-radius: 14px; padding: 1.3rem 1.5rem; font-family: 'Courier New', monospace; font-size: 0.83rem; line-height: 1.8; overflow-x: auto; margin: 0.8rem 0; color: #c9d1d9; }
-    .console-block .c-title  { color: #79c0ff; font-weight: 700; }
-    .console-block .c-head   { color: #56d364; }
-    .console-block .c-num    { color: #ffa657; }
-    .console-block .c-dim    { color: #484f58; }
-
-    /* MOVIES TABLE */
-    .movies-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.85rem; }
-    .movies-table th { background: linear-gradient(90deg, var(--primary), var(--primary-2)); color: #fff; padding: 0.6rem 0.8rem; text-align: left; font-size: 0.78rem; }
-    .movies-table td { padding: 0.55rem 0.8rem; border-bottom: 1px solid #e0e8f5; color: #2c4b76; }
-    .movies-table tr:nth-child(even) td { background: #f4f8ff; }
-    .movies-table tr:hover td { background: #e8f0ff; }
-    .badge-genre { background: #e6eeff; color: #4656d9; font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 999px; }
-
-    /* OOP CARDS */
-    .oop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .oop-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem; }
-    .oop-card h4 { margin: 0 0 0.45rem; color: var(--primary); font-size: 0.95rem; }
-    .oop-card p  { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
-
-    /* MEMBERSHIP TABLE */
-    .membership-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.88rem; }
-    .membership-table th { background: linear-gradient(90deg, var(--primary), var(--primary-2)); color: #fff; padding: 0.55rem 1rem; text-align: left; }
-    .membership-table td { padding: 0.55rem 1rem; border-bottom: 1px solid #e0e8f5; color: #2c4b76; }
-    .badge-std { background: #e6eeff; color: #4656d9; font-size: 0.75rem; font-weight: 700; padding: 0.18rem 0.6rem; border-radius: 999px; }
-    .badge-pre { background: #fff3cd; color: #856404; font-size: 0.75rem; font-weight: 700; padding: 0.18rem 0.6rem; border-radius: 999px; }
-    .badge-vip { background: #f8d7da; color: #842029; font-size: 0.75rem; font-weight: 700; padding: 0.18rem 0.6rem; border-radius: 999px; }
-
-    /* FLOW */
-    .flow-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-    .flow-box { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 10px; padding: 0.55rem 1rem; font-weight: 700; font-size: 0.88rem; color: var(--primary); white-space: nowrap; }
-    .flow-arrow { color: var(--muted); font-size: 1.2rem; font-weight: 700; }
-
-    /* FOOTER */
-    .site-footer { text-align: center; color: var(--muted); padding: 3rem 1rem 2rem; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    @keyframes floatBlobOne { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(22px,16px) scale(1.08); } }
-    @keyframes floatBlobTwo { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,-14px) scale(1.1); } }
-    @media (max-width: 640px) {
-      .media-grid { grid-template-columns: 1fr; }
-      .flow-row { flex-direction: column; align-items: flex-start; }
-      .case-hero { padding: 3rem 0 1.5rem; }
-      .movies-table { font-size: 0.75rem; }
-    }
   </style>
 </head>
 <body>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="stars"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
 
-  <header class="site-header">
-    <nav class="container nav">
-      <a class="logo" href="index.html">W.A.Dewmi Umegha</a>
-      <a class="back-btn" href="index.html#projects">← Back to Portfolio</a>
-    </nav>
-  </header>
+<header class="site-header">
+  <nav class="container">
+    <a class="nav-logo" href="index.html">D·U</a>
+    <a class="back-btn" href="index.html#projects">← Back</a>
+  </nav>
+</header>
 
   <main>
 
@@ -188,7 +56,7 @@
     <section class="case-hero container">
       <p class="case-eyebrow">Object-Oriented Design and Programming</p>
       <h1>Cinema Booking System</h1>
-      <p class="subtitle">A full-stack Java application combining a console interface, MySQL database, and a RESTful web service — supporting complete CRUD operations for movies, customers, screenings, and bookings.</p>
+       
       <div class="tags">
         <span>Java</span>
         <span>MySQL</span>
@@ -203,7 +71,7 @@
 
     <!-- OVERVIEW -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>📋 Project Overview</h2>
         <p>The Cinema Booking System — "Grand City Cinema" — is a two-part Java project. <strong>Part 1</strong> is a console-based CRUD application connected to a MySQL database via JDBC. <strong>Part 2</strong> exposes the same logic as a RESTful web service using Java's built-in <code>com.sun.net.httpserver</code>, testable via Postman. Both parts share the same OOP model layer.</p>
         <div class="highlights">
@@ -233,7 +101,7 @@
 
     <!-- CONSOLE MENU -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🖥️ Console Application — Menu Structure</h2>
         <p>The console app (<code>CinemaConsoleApp.java</code>) provides a numbered menu covering all CRUD operations:</p>
         <div class="console-block">
@@ -266,7 +134,7 @@
 
     <!-- SCREENSHOTS -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🖼️ Console Output Screenshots</h2>
         <div class="media-block">
           <img src="assets/READ.PNG" alt="Console output screenshot" class="about-image">
@@ -278,7 +146,7 @@
 
     <!-- REST API ENDPOINTS -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🌐 REST Web Service Endpoints</h2>
         <p><code>CinemaWebService.java</code> starts an HTTP server on <strong>port 8080</strong>. All responses are in JSON format with CORS enabled.</p>
         <div class="endpoint-list">
@@ -297,188 +165,16 @@
       </div>
     </section>
 
-    <!-- DATABASE SCHEMA -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🗄️ Database Schema</h2>
-        <p>The MySQL database <code>cinema_booking</code> contains four tables with foreign key relationships and <code>CASCADE</code> delete rules:</p>
-        <div class="db-grid">
+    
 
-          <div class="db-table">
-            <div class="db-table-header">🎬 movies</div>
-            <div class="db-table-body">
-              <div class="db-col"><span class="col-name">id</span><span class="col-type">INT</span><span class="col-pk">PK</span></div>
-              <div class="db-col"><span class="col-name">title</span><span class="col-type">VARCHAR(200)</span></div>
-              <div class="db-col"><span class="col-name">duration</span><span class="col-type">INT</span></div>
-              <div class="db-col"><span class="col-name">genre</span><span class="col-type">VARCHAR(100)</span></div>
-              <div class="db-col"><span class="col-name">price</span><span class="col-type">DECIMAL(10,2)</span></div>
-              <div class="db-col"><span class="col-name">description</span><span class="col-type">TEXT</span></div>
-              <div class="db-col"><span class="col-name">rating</span><span class="col-type">DECIMAL(3,1)</span></div>
-              <div class="db-col"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
-            </div>
-          </div>
+    
 
-          <div class="db-table">
-            <div class="db-table-header">👤 customers</div>
-            <div class="db-table-body">
-              <div class="db-col"><span class="col-name">id</span><span class="col-type">INT</span><span class="col-pk">PK</span></div>
-              <div class="db-col"><span class="col-name">name</span><span class="col-type">VARCHAR(100)</span></div>
-              <div class="db-col"><span class="col-name">email</span><span class="col-type">VARCHAR(100) UNIQUE</span></div>
-              <div class="db-col"><span class="col-name">phone</span><span class="col-type">VARCHAR(20)</span></div>
-              <div class="db-col"><span class="col-name">membership_type</span><span class="col-type">VARCHAR(20)</span></div>
-              <div class="db-col"><span class="col-name">created_at</span><span class="col-type">TIMESTAMP</span></div>
-            </div>
-          </div>
-
-          <div class="db-table">
-            <div class="db-table-header">📅 screenings</div>
-            <div class="db-table-body">
-              <div class="db-col"><span class="col-name">id</span><span class="col-type">INT</span><span class="col-pk">PK</span></div>
-              <div class="db-col"><span class="col-name">movie_id</span><span class="col-type">INT</span><span class="col-fk">FK</span></div>
-              <div class="db-col"><span class="col-name">screening_date</span><span class="col-type">DATE</span></div>
-              <div class="db-col"><span class="col-name">screening_time</span><span class="col-type">TIME</span></div>
-              <div class="db-col"><span class="col-name">screen_number</span><span class="col-type">VARCHAR(20)</span></div>
-              <div class="db-col"><span class="col-name">total_seats</span><span class="col-type">INT DEFAULT 150</span></div>
-              <div class="db-col"><span class="col-name">available_seats</span><span class="col-type">INT DEFAULT 150</span></div>
-            </div>
-          </div>
-
-          <div class="db-table">
-            <div class="db-table-header">🎫 bookings</div>
-            <div class="db-table-body">
-              <div class="db-col"><span class="col-name">id</span><span class="col-type">INT</span><span class="col-pk">PK</span></div>
-              <div class="db-col"><span class="col-name">customer_id</span><span class="col-type">INT</span><span class="col-fk">FK</span></div>
-              <div class="db-col"><span class="col-name">screening_id</span><span class="col-type">INT</span><span class="col-fk">FK</span></div>
-              <div class="db-col"><span class="col-name">seat_number</span><span class="col-type">VARCHAR(10)</span></div>
-              <div class="db-col"><span class="col-name">price_paid</span><span class="col-type">DECIMAL(10,2)</span></div>
-              <div class="db-col"><span class="col-name">booking_status</span><span class="col-type">VARCHAR(20)</span></div>
-              <div class="db-col"><span class="col-name">booking_date</span><span class="col-type">TIMESTAMP</span></div>
-            </div>
-          </div>
-
-        </div>
-        <p style="margin-top:1rem;">A <strong>UNIQUE constraint</strong> on <code>(screening_id, seat_number)</code> in the bookings table prevents double-booking of the same seat at the database level.</p>
-      </div>
-    </section>
-
-    <!-- MOVIES IN DB -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🎞️ Seeded Movies in Database</h2>
-        <p>The database is pre-loaded with 8 movies spanning multiple genres:</p>
-        <table class="movies-table">
-          <thead>
-            <tr><th>Title</th><th>Genre</th><th>Duration</th><th>Price (Rs.)</th><th>Rating</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Interstellar</td><td><span class="badge-genre">Sci-Fi</span></td><td>2h 49m</td><td>1,500.00</td><td>⭐ 8.6</td></tr>
-            <tr><td>The Hangover</td><td><span class="badge-genre">Comedy</span></td><td>2h 32m</td><td>1,400.00</td><td>⭐ 7.7</td></tr>
-            <tr><td>F1</td><td><span class="badge-genre">Sport/Action</span></td><td>2h 28m</td><td>1,450.00</td><td>⭐ 8.1</td></tr>
-            <tr><td>Ballerina</td><td><span class="badge-genre">Action</span></td><td>2h 22m</td><td>1,300.00</td><td>⭐ 7.5</td></tr>
-            <tr><td>Fountain of Youth</td><td><span class="badge-genre">Adventure</span></td><td>2h 34m</td><td>1,350.00</td><td>⭐ 7.3</td></tr>
-            <tr><td>Uncharted</td><td><span class="badge-genre">Adventure</span></td><td>2h 22m</td><td>1,250.00</td><td>⭐ 6.9</td></tr>
-            <tr><td>Gladiator</td><td><span class="badge-genre">Historical</span></td><td>2h 16m</td><td>1,400.00</td><td>⭐ 8.5</td></tr>
-            <tr><td>Toy Story</td><td><span class="badge-genre">Animation</span></td><td>1h 21m</td><td>1,200.00</td><td>⭐ 8.3</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CLASS STRUCTURE -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🏗️ Class Structure</h2>
-        <p>The model layer is built from 6 Java classes and 1 interface, organized around clear OOP responsibilities:</p>
-        <div class="class-grid">
-
-          <div class="class-card">
-            <div class="class-name">User</div>
-            <div class="class-extends">Base superclass</div>
-            <div class="class-label">Fields (protected)</div>
-            <div class="field">- id: int</div>
-            <div class="field">- name: String</div>
-            <div class="field">- email: String</div>
-            <div class="class-label">Key Methods</div>
-            <div class="method">+ displayInfo(): String</div>
-            <div class="method">+ getters / setters</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Customer</div>
-            <div class="class-extends">extends User</div>
-            <div class="class-label">Extra Fields</div>
-            <div class="field">- membershipType: String</div>
-            <div class="field">- phone: String</div>
-            <div class="class-label">Key Methods</div>
-            <div class="method">+ calculateDiscount(price)</div>
-            <div class="method">+ displayInfo() — overrides</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Movie</div>
-            <div class="class-extends">Standalone class</div>
-            <div class="class-label">Fields</div>
-            <div class="field">- title, genre: String</div>
-            <div class="field">- duration, id: int</div>
-            <div class="field">- price, rating: double</div>
-            <div class="class-label">Key Methods</div>
-            <div class="method">+ getDurationFormatted()</div>
-            <div class="method">+ setDuration() — validated</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Screening</div>
-            <div class="class-extends">Composition with Seat</div>
-            <div class="class-label">Fields</div>
-            <div class="field">- movie: Movie</div>
-            <div class="field">- date, time, screen: String</div>
-            <div class="field">- seats: List&lt;Seat&gt;</div>
-            <div class="class-label">Key Methods</div>
-            <div class="method">+ bookSeat(seatNumber)</div>
-            <div class="method">+ getAvailableSeatsCount()</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Seat</div>
-            <div class="class-extends">Standalone class</div>
-            <div class="class-label">Fields</div>
-            <div class="field">- seatNumber: String</div>
-            <div class="field">- booked: boolean</div>
-            <div class="class-label">Key Methods</div>
-            <div class="method">+ book(): boolean</div>
-            <div class="method">+ cancelBooking(): boolean</div>
-            <div class="method">+ equals() / hashCode()</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Booking</div>
-            <div class="class-extends">implements Payable</div>
-            <div class="class-label">Fields</div>
-            <div class="field">- customer: Customer</div>
-            <div class="field">- screening: Screening</div>
-            <div class="field">- seatNumber, status: String</div>
-            <div class="field">- pricePaid: double</div>
-            <div class="class-label">Key Methods</div>
-            <div class="method">+ processPayment(amount)</div>
-            <div class="method">+ generateReceipt(): String</div>
-            <div class="method">+ confirmBooking() / cancel()</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Payable</div>
-            <div class="class-extends">&lt;&lt;interface&gt;&gt;</div>
-            <div class="class-label">Contract Methods</div>
-            <div class="method">+ processPayment(double)</div>
-            <div class="method">+ generateReceipt()</div>
-          </div>
-
-        </div>
-      </div>
-    </section>
+    
+          
 
     <!-- MEMBERSHIP TIERS -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🏷️ Membership & Discount System</h2>
         <p>The <code>calculateDiscount()</code> method in <code>Customer.java</code> applies tiered pricing based on membership type:</p>
         <table class="membership-table">
@@ -495,7 +191,7 @@
 
     <!-- OOP / SOLID -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🎓 OOP & SOLID Principles Applied</h2>
         <div class="oop-grid">
           <div class="oop-card">
@@ -513,63 +209,14 @@
           <div class="oop-card">
             <h4>🧱 Composition</h4>
             <p><code>Screening</code> contains a <code>List&lt;Seat&gt;</code> — seats are created and managed by the screening, showing a "has-a" composition relationship.</p>
-          </div>
-          <div class="oop-card">
-            <h4>📐 SRP</h4>
-            <p>Each class has one clear responsibility: <code>Movie</code> handles movie data, <code>Seat</code> handles seat state, <code>Booking</code> handles booking + payment.</p>
-          </div>
-          <div class="oop-card">
-            <h4>🔌 ISP</h4>
-            <p>The <code>Payable</code> interface is focused and minimal — only <code>processPayment()</code> and <code>generateReceipt()</code> — not a bloated general-purpose interface.</p>
-          </div>
+          </div>         
         </div>
-      </div>
-    </section>
-
-    <!-- APP FLOW -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🔄 Application Flow</h2>
-        <p><strong>Console App startup:</strong></p>
-        <div class="flow-row">
-          <div class="flow-box">Main.java</div><div class="flow-arrow">→</div>
-          <div class="flow-box">DatabaseConnection</div><div class="flow-arrow">→</div>
-          <div class="flow-box">CinemaConsoleApp</div><div class="flow-arrow">→</div>
-          <div class="flow-box">*DB classes (CRUD)</div><div class="flow-arrow">→</div>
-          <div class="flow-box">Model Objects</div>
-        </div>
-        <p style="margin-top:1.2rem;"><strong>Web service startup:</strong></p>
-        <div class="flow-row">
-          <div class="flow-box">CinemaWebService</div><div class="flow-arrow">→</div>
-          <div class="flow-box">HttpServer :8080</div><div class="flow-arrow">→</div>
-          <div class="flow-box">Handler Classes</div><div class="flow-arrow">→</div>
-          <div class="flow-box">*DB classes</div><div class="flow-arrow">→</div>
-          <div class="flow-box">JSON Response</div>
-        </div>
-      </div>
-    </section>
-
-    
-
-    <!-- POSSIBLE IMPROVEMENTS -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🚀 Possible Improvements</h2>
-        <ul>
-          <li>Add PUT endpoint to the REST service for updating movie prices and customer info</li>
-          <li>Build a simple HTML/JS front-end to consume the REST API instead of Postman</li>
-          <li>Add JWT-based authentication to protect the booking and customer endpoints</li>
-          <li>Implement pagination for large movie and booking lists</li>
-          <li>Add email confirmation on booking (e.g., using JavaMail API)</li>
-          <li>Replace the basic HttpServer with a lightweight framework like Spark Java or Spring Boot</li>
-          <li>Add a seat map visual in the console showing booked vs available seats</li>
-        </ul>
       </div>
     </section>
 
     <!-- LINKS -->
     <section class="container" style="padding-bottom: 4rem;">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🔗 Links</h2>
         <p>
           <strong>GitHub Repository:</strong>
@@ -582,10 +229,10 @@
 
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> W.A.Dewmi Umegha. All rights reserved.</p>
-  </footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-  <script src="script.js"></script>
+
+<footer>
+  <p>&copy; <span id="year"></span> <span>Dewmi Umegha</span>. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
