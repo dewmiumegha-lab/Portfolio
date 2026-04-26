@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java Banking System | Dewmi Umegha</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* PAGE-SPECIFIC EXTRAS */
+    
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .highlight-card{background:rgba(200,200,198,0.03);border:1px solid var(--border);padding:1rem 1.4rem;text-align:center;min-width:90px;flex:1;}
+    .highlight-card .num{font-family:"Orbitron",monospace;font-size:1.5rem;font-weight:900;color:var(--silver);margin-bottom:.3rem;}
+    .highlight-card p{font-size:.78rem;color:var(--muted);letter-spacing:1px;margin:0;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+    .feature-card{background:rgba(200,200,198,0.02);border:1px solid var(--border);padding:1.1rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .feat-icon{font-size:1.5rem;flex-shrink:0;}
+    .feature-card h4{font-family:"Orbitron",monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;letter-spacing:1px;}
+    .feature-card p{font-size:.85rem;color:var(--muted);margin:0;}
+
+  </style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="stars"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+
+<header class="site-header">
+  <nav class="container">
+    <a class="nav-logo" href="index.html">D·U</a>
+    <a class="back-btn" href="index.html#projects">← Back</a>
+  </nav>
+</header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="case-hero container">
+      <p class="case-eyebrow">Introduction to Object-Oriented Programming</p>
+      <h1>Java Banking System</h1>
+      
+      <div class="tags">
+        <span>Java</span>
+        <span>Java Swing GUI</span>
+        <span>OOP</span>
+        <span>CSV File I/O</span>
+        <span>Desktop App</span>
+      </div>
+    </section>
+
+  
+
+    <!-- OVERVIEW -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>📋 Project Overview</h2>
+        <p>The Java Banking System is a desktop application built with Java Swing that simulates core banking operations. Account data is loaded from a CSV file at startup, and all changes — deposits, withdrawals, transfers — are reflected live in the GUI table. The project demonstrates strong OOP principles including inheritance, encapsulation, and abstraction.</p>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="num">4</div>
+            <p>Java Classes</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">3</div>
+            <p>Operations</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">CSV</div>
+            <p>Data Storage</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">OOP</div>
+            <p>Architecture</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>⚙️ Features</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feat-icon">📋</div>
+            <div>
+              <h4>View Accounts</h4>
+              <p>Display all holders with names, account numbers, and live balances in a Swing JTable.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feat-icon">💰</div>
+            <div>
+              <h4>Deposit</h4>
+              <p>Add funds to any account using an account number lookup with instant balance update.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feat-icon">💸</div>
+            <div>
+              <h4>Withdraw</h4>
+              <p>Deduct funds with balance validation and error handling for insufficient funds.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feat-icon">🔁</div>
+            <div>
+              <h4>Transfer</h4>
+              <p>Move funds between two accounts atomically via the dedicated Transaction class.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feat-icon">📂</div>
+            <div>
+              <h4>CSV Loading</h4>
+              <p>Reads account data from Accounts.csv at startup with a graceful fallback on file error.</p>
+            </div>
+          </div>
+          
+        
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS GRID -->
+    <section class="container">
+      <div class="media-grid">
+        <div class="media-block">
+          <img src="assets/bnk1.PNG" alt="Profile photo of Your Name" class="about-image">
+        </div>
+        <div class="media-block">
+          <img src="assets/run.PNG" alt="Profile photo of Your Name" class="about-image">
+          <div class="media-placeholder">
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+
+    <!-- CSV FORMAT -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>📄 CSV Data Format</h2>
+        <p>Account data is stored in <strong>Accounts.csv.</strong>  Each line represents one account: FirstName, LastName, AccountNumber, Balance.</p>
+        
+        <p>At startup, <code>ReadAccounts</code> parses this file into four <code>LinkedList</code> collections, which are then used to build the <code>Account[]</code> array passed to the GUI.</p>
+      </div>
+    </section>
+
+
+    <!-- OOP CONCEPTS -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🎓 OOP Concepts Applied</h2>
+        <div class="oop-grid">
+          <div class="oop-card">
+            <h4>🧬 Inheritance</h4>
+            <p>Account extends Customer to reuse name fields and accessor methods without code duplication.</p>
+          </div>
+          <div class="oop-card">
+            <h4>🔒 Encapsulation</h4>
+            <p>All fields are declared private. Public getters and setters control access, protecting data integrity.</p>
+          </div>
+          <div class="oop-card">
+            <h4>🎭 Abstraction</h4>
+            <p>The Transaction class hides transfer logic from the GUI layer — the GUI just calls transfer() without knowing the internals.</p>
+          </div>
+          <div class="oop-card">
+            <h4>⚡ Event-Driven</h4>
+            <p>Inner HandlerClass implements ActionListener for all buttons, keeping event logic close to the UI it serves.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section class="container" style="padding-bottom: 4rem;">
+      <div class="case-section reveal">
+        <h2>🔗 Links</h2>
+        <p>
+          <strong>GitHub Repository:</strong>
+          <a href="https://github.com/dewmiumegha-lab" target="_blank" rel="noreferrer" style="color: var(--primary); font-weight: 600; text-decoration: none;">
+            github.com/dewmiumegha-lab
+          </a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+
+<footer>
+  <p>&copy; <span id="year"></span> <span>Dewmi Umegha</span>. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
