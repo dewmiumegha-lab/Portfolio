@@ -5,132 +5,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Java Banking System | Dewmi Umegha</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    :root {
-      --bg: #eef3ff; --bg-soft: #e8f6ff; --surface: #ffffff;
-      --text: #11223f; --muted: #35537f;
-      --primary: #4656d9; --primary-2: #1e97d6; --accent: #6675ff;
-      --border: #c7d5ef;
-      --shadow: 0 18px 40px rgba(63, 98, 178, 0.16);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; font-family: Inter, system-ui, sans-serif;
-      color: var(--text); line-height: 1.6;
-      background:
-        radial-gradient(circle at 0% 0%, #dde8ff 0, rgba(221,232,255,0) 46%),
-        radial-gradient(circle at 100% 0%, #daf2ff 0, rgba(218,242,255,0) 40%),
-        linear-gradient(160deg, var(--bg) 0%, var(--bg-soft) 100%);
-      overflow-x: hidden;
-    }
-    body::before, body::after {
-      content: ""; position: fixed;
-      width: 280px; height: 280px; border-radius: 50%;
-      filter: blur(4px); z-index: -1; opacity: 0.55;
-    }
-    body::before { top: -60px; left: -60px; background: radial-gradient(circle, #d8e4ff 0%, rgba(216,228,255,0) 72%); animation: floatBlobOne 12s ease-in-out infinite; }
-    body::after { right: -70px; bottom: -60px; background: radial-gradient(circle, #cceeff 0%, rgba(204,238,255,0) 72%); animation: floatBlobTwo 14s ease-in-out infinite; }
-    .container { width: min(1020px, 92%); margin: 0 auto; }
+    /* PAGE-SPECIFIC EXTRAS */
+    
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .highlight-card{background:rgba(245,200,66,0.04);border:1px solid var(--border);padding:1rem 1.4rem;text-align:center;min-width:90px;flex:1;}
+    .highlight-card .num{font-family:"Orbitron",monospace;font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:.3rem;}
+    .highlight-card p{font-size:.78rem;color:var(--muted);letter-spacing:1px;margin:0;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+    .feature-card{background:rgba(245,200,66,0.03);border:1px solid var(--border);padding:1.1rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .feat-icon{font-size:1.5rem;flex-shrink:0;}
+    .feature-card h4{font-family:"Orbitron",monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;letter-spacing:1px;}
+    .feature-card p{font-size:.85rem;color:var(--muted);margin:0;}
 
-    /* HEADER */
-    .site-header { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); background-color: rgba(255,255,255,0.88); border-bottom: 1px solid var(--border); }
-    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 68px; gap: 0.65rem; }
-    .logo { text-decoration: none; font-weight: 800; font-size: 1.12rem; background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 180% 180%; animation: gradientMove 6s ease infinite; }
-    .back-btn { display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; color: var(--muted); font-weight: 600; border: 1px solid var(--border); background: #ebf2ff; padding: 0.45rem 0.9rem; border-radius: 10px; transition: color 0.2s, box-shadow 0.2s; }
-    .back-btn:hover { color: var(--primary); box-shadow: 0 4px 12px rgba(70,86,217,0.15); }
-
-    /* HERO */
-    .case-hero { padding: 5rem 0 2.5rem; animation: fadeUp 0.8s ease both; }
-    .case-eyebrow { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .case-hero h1 { margin: 0 0 0.7rem; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; background: linear-gradient(95deg, #4338ca 0%, #4f46e5 45%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% auto; animation: gradientMove 7s ease infinite; }
-    .case-hero .subtitle { color: #1c3f6f; font-size: 1.05rem; font-weight: 600; max-width: 680px; margin-bottom: 1.2rem; }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .tags span { background: linear-gradient(120deg, #e6eeff, #def2ff); border: 1px solid #bdd0ef; color: #1a3b68; font-size: 0.82rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 999px; }
-
-    /* MEDIA */
-    .media-block { width: 100%; border-radius: 18px; background: linear-gradient(145deg, #e6eeff 0%, #d8f0ff 100%); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 2rem; }
-    .media-block img, .media-block video { width: 100%; display: block; border-radius: 18px; }
-    .media-placeholder { width: 100%; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; color: var(--muted); font-weight: 600; }
-    .media-placeholder .icon { font-size: 3.5rem; opacity: 0.5; }
-    .media-placeholder p { margin: 0; font-size: 0.95rem; }
-    .media-placeholder small { color: #7a9cc0; font-size: 0.8rem; }
-    .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-    .media-grid .media-block { margin-bottom: 0; }
-    .media-grid .media-placeholder { height: 0px; }
-
-    /* SECTIONS */
-    .case-section { background: linear-gradient(140deg, rgba(255,255,255,0.93), rgba(238,245,255,0.95)); border: 1px solid var(--border); border-radius: 18px; padding: 1.8rem; box-shadow: var(--shadow); margin-bottom: 1.4rem; position: relative; overflow: hidden; }
-    .case-section::before { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); opacity: 0.75; }
-    .case-section h2 { margin: 0 0 1rem; font-size: 1.35rem; }
-    .case-section p { color: #2c4b76; margin: 0.5rem 0; }
-    .case-section ul { padding-left: 1.4rem; color: #2c4b76; margin: 0.5rem 0; }
-    .case-section ul li { margin-bottom: 0.4rem; }
-
-    /* HIGHLIGHTS */
-    .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .highlight-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem; text-align: center; }
-    .highlight-card .num { font-size: 1.8rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .highlight-card p { margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
-
-    /* FEATURE GRID */
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .feature-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem 1.2rem; display: flex; gap: 0.85rem; align-items: flex-start; }
-    .feature-card .feat-icon { font-size: 1.6rem; flex-shrink: 0; margin-top: 0.1rem; }
-    .feature-card h4 { margin: 0 0 0.3rem; font-size: 0.95rem; color: var(--primary); }
-    .feature-card p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
-
-    /* CLASS STRUCTURE */
-    .class-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .class-card { background: #1a2744; border-radius: 14px; padding: 1.2rem; position: relative; overflow: hidden; }
-    .class-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--primary), var(--primary-2)); }
-    .class-card .class-name { font-weight: 800; font-size: 1.05rem; color: #82b4ff; margin-bottom: 0.25rem; }
-    .class-card .class-extends { font-size: 0.75rem; color: #5a7fa8; margin-bottom: 0.8rem; }
-    .class-card .class-label { font-size: 0.7rem; font-weight: 700; color: #5a7fa8; text-transform: uppercase; letter-spacing: 0.06em; margin: 0.6rem 0 0.3rem; }
-    .class-card .field { font-family: 'Courier New', monospace; font-size: 0.8rem; color: #a8d1ff; padding: 0.15rem 0; }
-    .class-card .method { font-family: 'Courier New', monospace; font-size: 0.8rem; color: #80e4b0; padding: 0.15rem 0; }
-
-    /* APP FLOW */
-    .flow-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-    .flow-box { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 10px; padding: 0.55rem 1rem; font-weight: 700; font-size: 0.9rem; color: var(--primary); white-space: nowrap; }
-    .flow-arrow { color: var(--muted); font-size: 1.2rem; font-weight: 700; }
-
-    /* CSV BLOCK */
-    .csv-block { background: #1a2744; border-radius: 12px; padding: 1.2rem 1.4rem; font-family: 'Courier New', monospace; font-size: 0.88rem; color: #80e4b0; line-height: 1.9; overflow-x: auto; margin: 0.8rem 0; }
-    .csv-block .csv-comment { color: #5a7fa8; }
-
-    /* OOP CARDS */
-    .oop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .oop-card { background: linear-gradient(145deg, #fff 0%, #edf5ff 100%); border: 1px solid #cbdaef; border-radius: 14px; padding: 1.1rem; }
-    .oop-card h4 { margin: 0 0 0.45rem; color: var(--primary); font-size: 0.95rem; }
-    .oop-card p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
-
-    /* FOOTER */
-    .site-footer { text-align: center; color: var(--muted); padding: 3rem 1rem 2rem; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    @keyframes floatBlobOne { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(22px,16px) scale(1.08); } }
-    @keyframes floatBlobTwo { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,-14px) scale(1.1); } }
-    @media (max-width: 600px) {
-      .media-grid { grid-template-columns: 1fr; }
-      .flow-row { flex-direction: column; align-items: flex-start; }
-      .case-hero { padding: 3rem 0 1.5rem; }
-    }
   </style>
 </head>
 <body>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="stars"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
 
-  <header class="site-header">
-    <nav class="container nav">
-      <a class="logo" href="index.html">W.A.Dewmi Umegha</a>
-      <a class="back-btn" href="index.html#projects">← Back to Portfolio</a>
-    </nav>
-  </header>
+<header class="site-header">
+  <nav class="container">
+    <a class="nav-logo" href="index.html">D·U</a>
+    <a class="back-btn" href="index.html#projects">← Back</a>
+  </nav>
+</header>
 
   <main>
 
@@ -138,7 +41,7 @@
     <section class="case-hero container">
       <p class="case-eyebrow">Introduction to Object-Oriented Programming</p>
       <h1>Java Banking System</h1>
-      <p class="subtitle">A desktop banking management application with a Swing GUI. Supports real-time deposit, withdrawal, and transfer operations with CSV-based persistent data loading.</p>
+      
       <div class="tags">
         <span>Java</span>
         <span>Java Swing GUI</span>
@@ -152,7 +55,7 @@
 
     <!-- OVERVIEW -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>📋 Project Overview</h2>
         <p>The Java Banking System is a desktop application built with Java Swing that simulates core banking operations. Account data is loaded from a CSV file at startup, and all changes — deposits, withdrawals, transfers — are reflected live in the GUI table. The project demonstrates strong OOP principles including inheritance, encapsulation, and abstraction.</p>
         <div class="highlights">
@@ -178,7 +81,7 @@
 
     <!-- FEATURES -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>⚙️ Features</h2>
         <div class="feature-grid">
           <div class="feature-card">
@@ -225,118 +128,32 @@
     <section class="container">
       <div class="media-grid">
         <div class="media-block">
-          <img src="assets\bnk1.PNG" alt="Profile photo of Your Name" class="about-image">
+          <img src="assets/bnk1.PNG" alt="Profile photo of Your Name" class="about-image">
         </div>
         <div class="media-block">
-          <img src="assets\run.PNG" alt="Profile photo of Your Name" class="about-image">
+          <img src="assets/run.PNG" alt="Profile photo of Your Name" class="about-image">
           <div class="media-placeholder">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CLASS STRUCTURE -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🏗️ Class Structure</h2>
-        <p>The application is built around four Java classes, each with a clear single responsibility:</p>
-        <div class="class-grid">
-
-          <div class="class-card">
-            <div class="class-name">Customer</div>
-            <div class="class-extends">Base class</div>
-            <div class="class-label">Fields</div>
-            <div class="field">- firstName: String</div>
-            <div class="field">- lastName: String</div>
-            <div class="class-label">Methods</div>
-            <div class="method">+ getFirstName(): String</div>
-            <div class="method">+ getLastName(): String</div>
-            <div class="method">+ setFirstName(String)</div>
-            <div class="method">+ setLastName(String)</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Account</div>
-            <div class="class-extends">extends Customer</div>
-            <div class="class-label">Fields</div>
-            <div class="field">- balance: int</div>
-            <div class="field">- accountNumber: int</div>
-            <div class="class-label">Methods</div>
-            <div class="method">+ getBalance(): int</div>
-            <div class="method">+ getAccountNum(): int</div>
-            <div class="method">+ deposit(int)</div>
-            <div class="method">+ withdraw(int)</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">Transaction</div>
-            <div class="class-extends">Business logic</div>
-            <div class="class-label">Methods</div>
-            <div class="method">+ transfer(</div>
-            <div class="method">&nbsp;&nbsp;acc1: Account,</div>
-            <div class="method">&nbsp;&nbsp;acc2: Account,</div>
-            <div class="method">&nbsp;&nbsp;amount: int)</div>
-          </div>
-
-          <div class="class-card">
-            <div class="class-name">ReadAccounts</div>
-            <div class="class-extends">File I/O</div>
-            <div class="class-label">Methods</div>
-            <div class="method">+ getFirstNames():</div>
-            <div class="method">&nbsp;&nbsp;LinkedList&lt;String&gt;</div>
-            <div class="method">+ getLastNames():</div>
-            <div class="method">&nbsp;&nbsp;LinkedList&lt;String&gt;</div>
-            <div class="method">+ getAccounts():</div>
-            <div class="method">&nbsp;&nbsp;LinkedList&lt;Integer&gt;</div>
-            <div class="method">+ getBalances():</div>
-            <div class="method">&nbsp;&nbsp;LinkedList&lt;Integer&gt;</div>
-          </div>
-
-        </div>
-      </div>
-    </section>
+   
 
     <!-- CSV FORMAT -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>📄 CSV Data Format</h2>
-        <p>Account data is stored in <strong>Accounts.csv</strong> with no header row. Each line represents one account: FirstName, LastName, AccountNumber, Balance.</p>
-        <div class="csv-block">
-<span class="csv-comment"># Accounts.csv — no header row</span>
-<span class="csv-comment"># Format: FirstName, LastName, AccountNumber, Balance</span>
-Dewmi,Umegha,11,10000
-Udara,Nethmi,22,10
-Ginuka,Weragoda,33,50000
-Sanduni,Priyalakshi,44,99999
-        </div>
+        <p>Account data is stored in <strong>Accounts.csv.</strong>  Each line represents one account: FirstName, LastName, AccountNumber, Balance.</p>
+        
         <p>At startup, <code>ReadAccounts</code> parses this file into four <code>LinkedList</code> collections, which are then used to build the <code>Account[]</code> array passed to the GUI.</p>
-      </div>
-    </section>
-
-    <!-- APP FLOW -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🔄 Application Flow</h2>
-        <p>The startup sequence and runtime data flow between components:</p>
-        <div class="flow-row">
-          <div class="flow-box">Main.java</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">ReadAccounts</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">Account[ ]</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">GUI (Swing)</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">Transaction</div>
-        </div>
-        <p style="margin-top:1rem;">User interactions in the GUI trigger <strong>ActionListener</strong> events via an inner <code>HandlerClass</code>, which calls the appropriate methods on the relevant <code>Account</code> or <code>Transaction</code> objects, then refreshes the JTable model.</p>
       </div>
     </section>
 
 
     <!-- OOP CONCEPTS -->
     <section class="container">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🎓 OOP Concepts Applied</h2>
         <div class="oop-grid">
           <div class="oop-card">
@@ -359,24 +176,9 @@ Sanduni,Priyalakshi,44,99999
       </div>
     </section>
 
-    <!-- POSSIBLE IMPROVEMENTS -->
-    <section class="container">
-      <div class="case-section">
-        <h2>🚀 Possible Improvements</h2>
-        <ul>
-          <li>Write updated balances back to Accounts.csv after each transaction</li>
-          <li>Add overdraft protection — check balance before allowing a withdrawal</li>
-          <li>Refactor ReadAccounts to parse CSV in a single pass instead of four separate passes</li>
-          <li>Add account creation and deletion directly from the GUI</li>
-          <li>Replace CSV storage with a SQLite or MySQL database for better scalability</li>
-          <li>Add a transaction history log displayed in a separate scrollable panel</li>
-        </ul>
-      </div>
-    </section>
-
     <!-- LINKS -->
     <section class="container" style="padding-bottom: 4rem;">
-      <div class="case-section">
+      <div class="case-section reveal">
         <h2>🔗 Links</h2>
         <p>
           <strong>GitHub Repository:</strong>
@@ -389,10 +191,10 @@ Sanduni,Priyalakshi,44,99999
 
   </main>
 
-  <footer class="site-footer">
-    <p>&copy; <span id="year"></span> W.A.Dewmi Umegha. All rights reserved.</p>
-  </footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-  <script src="script.js"></script>
+
+<footer>
+  <p>&copy; <span id="year"></span> <span>Dewmi Umegha</span>. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
