@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run & Think 3D Game | Dewmi Umegha</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* PAGE-SPECIFIC EXTRAS */
+    
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .highlight-card{background:rgba(200,200,198,0.03);border:1px solid var(--border);padding:1rem 1.4rem;text-align:center;min-width:90px;flex:1;}
+    .highlight-card .num{font-family:"Orbitron",monospace;font-size:1.5rem;font-weight:900;color:var(--gold3);margin-bottom:.3rem;}
+    .highlight-card p{font-size:.78rem;color:var(--text);letter-spacing:1px;margin:0;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+    .feature-card{background:rgba(200,200,198,0.02);border:1px solid var(--border);padding:1.1rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .feat-icon{font-size:1.5rem;flex-shrink:0;}
+    .feature-card h4{font-family:"Orbitron",monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;letter-spacing:1px;}
+    .feature-card p{font-size:.85rem;color:var(--text);margin:0;}
+
+  </style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="stars"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+
+<header class="site-header">
+  <nav class="container">
+    <a class="nav-logo" href="index.html">D·U</a>
+    <a class="back-btn" href="index.html#projects">← Back</a>
+  </nav>
+</header>
+
+  <main>
+    <section class="case-hero container">
+      <p class="case-eyebrow">Interactive 3D Applications and Academic Skills</p>
+      <h1>Run & Think 3D  Game</h1>
+      <p class="subtitle">A 3D educational puzzle runner game built in Unity, designed to make learning fun by combining gameplay with math and logic challenges.</p>
+      <div class="tags">
+        <span>Unity 3D</span>
+        <span>C#</span>
+        <span>Game Design</span>
+        <span>3D Development</span>
+        <span>Educational Game</span>
+      </div>
+    </section>
+
+    <section class="container">
+  <div class="media-block">
+
+    <iframe 
+  width="100%" 
+  height="400" 
+  src="https://www.youtube.com/embed/e3EfF0ZRICs" 
+  frameborder="0" 
+  allowfullscreen>
+</iframe>
+
+  </div>
+</section>
+
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>📋 Project Overview</h2>
+        <p>
+          <strong>Run & Think</strong> is a 3D infinite-runner style game developed in Unity using C#. The player controls a character who must run, jump, and dodge obstacles — but with a twist: to progress or gain power-ups, players must answer math and logic questions correctly. Wrong answers result in obstacles or penalties.
+        </p>
+        <p>The game was designed to make learning engaging for younger audiences by embedding educational content inside an exciting gameplay loop.</p>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="num">3D</div>
+            <p>Built in Unity 3D</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">C#</div>
+            <p>Scripted in C#</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">Edu</div>
+            <p>Educational Game</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">Fun</div>
+            <p>Gamified Learning</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🎯 Concept & Purpose</h2>
+        <p>The idea behind Run & Think was to tackle a common problem: students find traditional learning boring. By embedding quiz questions into a fast-paced runner game, the goal was to create a situation where players are motivated to think quickly and correctly — making knowledge recall feel natural and rewarding.</p>
+        <p>The game targets primary and lower secondary school students and focuses on mental arithmetic and logical reasoning skills.</p>
+      </div>
+    </section>
+
+    
+
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🛠️ Development Process</h2>
+        <p>The game was built entirely in Unity using C# scripts. Key systems developed include:</p>
+        <div class="role-cards">
+          <div class="role-card">
+            <h4>🎮 Player Controller</h4>
+            <p>Handles movement, jumping, sliding, and collision detection using Unity's Rigidbody physics.</p>
+          </div>
+          <div class="role-card">
+            <h4>🔀 Level Generator</h4>
+            <p>Procedurally generates track segments and obstacles to create an infinite play experience.</p>
+          </div>
+          <div class="role-card">
+            <h4>❓ Quiz System</h4>
+            <p>Randomly selects and displays math questions; validates answers and triggers game events accordingly.</p>
+          </div>
+          <div class="role-card">
+            <h4>🏆 Score Manager</h4>
+            <p>Tracks and displays player score based on distance, correct answers, and speed milestones.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="container" style="padding-bottom: 4rem;">
+      <div class="case-section reveal">
+        <h2>🔗 Links</h2>
+        <p>
+          <strong>GitHub Repository:</strong>
+          <a href="https://github.com/dewmiumegha-lab/Run-And-Think" target="_blank" rel="noreferrer" style="color: var(--gold); font-weight: 600; text-decoration: none;">
+            github.com/dewmiumegha-lab
+          </a>
+        
+          
+        </p>
+      </div>
+    </section>
+  </main>
+
+
+<footer>
+  <p>&copy; <span id="year"></span> <span>Dewmi Umegha</span>. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

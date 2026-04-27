@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="assets/favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinema Booking System | Dewmi Umegha</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* PAGE-SPECIFIC EXTRAS */
+    
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .highlight-card{background:rgba(200,200,198,0.03);border:1px solid var(--border);padding:1rem 1.4rem;text-align:center;min-width:90px;flex:1;}
+    .highlight-card .num{font-family:"Orbitron",monospace;font-size:1.5rem;font-weight:900;color:var(--gold3);margin-bottom:.3rem;}
+    .highlight-card p{font-size:.78rem;color:var(--text);letter-spacing:1px;margin:0;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+    .feature-card{background:rgba(200,200,198,0.02);border:1px solid var(--border);padding:1.1rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .feat-icon{font-size:1.5rem;flex-shrink:0;}
+    .feature-card h4{font-family:"Orbitron",monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;letter-spacing:1px;}
+    .feature-card p{font-size:.85rem;color:var(--text);margin:0;}
+
+    .console-block{background:#020408;border:1px solid rgba(200,200,198,0.14);padding:1.4rem;font-family:"Courier New",monospace;font-size:.82rem;line-height:2;margin:.75rem 0;white-space:pre-wrap;}
+    .c-title{color:var(--gold3);font-weight:700;font-size:.88rem;display:block;}
+    .c-head{color:var(--mid);font-weight:700;display:block;margin-top:.5rem;}
+    .c-num{color:#4ade80;}
+    .c-dim{color:var(--text);}
+    .api-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.85rem;}
+    .api-table th{background:rgba(200,200,198,0.05);color:var(--mid);font-family:"Orbitron",monospace;font-size:.7rem;letter-spacing:1px;padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--border);}
+    .api-table td{padding:.6rem .9rem;border-bottom:1px solid rgba(200,200,198,0.04);color:var(--text);vertical-align:top;}
+    .api-table td:first-child{font-family:"Courier New",monospace;color:#4ade80;font-size:.8rem;}
+    .api-table td:nth-child(2){color:var(--mid);font-size:.8rem;}
+    .method-get{color:#4ade80;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+    .method-post{color:#f59e0b;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+    .method-put{color:#60a5fa;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+    .method-del{color:#f87171;font-family:"Courier New",monospace;font-size:.78rem;font-weight:700;}
+
+  </style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="stars"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+
+<header class="site-header">
+  <nav class="container">
+    <a class="nav-logo" href="index.html">D·U</a>
+    <a class="back-btn" href="index.html#projects">← Back</a>
+  </nav>
+</header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="case-hero container">
+      <p class="case-eyebrow">Object-Oriented Design and Programming</p>
+      <h1>Cinema Booking System</h1>
+       
+      <div class="tags">
+        <span>Java</span>
+        <span>MySQL</span>
+        <span>JDBC</span>
+        <span>REST Web Service</span>
+        <span>OOP / SOLID</span>
+        <span>JSON</span>
+        <span>Postman</span>
+      </div>
+    </section>
+
+
+    <!-- OVERVIEW -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>📋 Project Overview</h2>
+        <p>The Cinema Booking System — "Grand City Cinema" — is a two-part Java project. <strong>Part 1</strong> is a console-based CRUD application connected to a MySQL database via JDBC. <strong>Part 2</strong> exposes the same logic as a RESTful web service using Java's built-in <code>com.sun.net.httpserver</code>, testable via Postman. Both parts share the same OOP model layer.</p>
+        <div class="highlights">
+          <div class="highlight-card">
+            <div class="num">8</div>
+            <p>Java Source Files</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">4</div>
+            <p>DB Tables</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">REST</div>
+            <p>Web Service</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">CRUD</div>
+            <p>Full Operations</p>
+          </div>
+          <div class="highlight-card">
+            <div class="num">3</div>
+            <p>Membership Tiers</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSOLE MENU -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🖥️ Console Application — Menu Structure</h2>
+        <p>The console app (<code>CinemaConsoleApp.java</code>) provides a numbered menu covering all CRUD operations:</p>
+        <div class="console-block">
+<span class="c-title">GRAND CITY CINEMA - BOOKING SYSTEM</span>
+
+<span class="c-head">VIEW OPERATIONS (READ)</span>
+<span class="c-num">1.</span> View All Movies
+<span class="c-num">2.</span> View All Screenings
+<span class="c-num">3.</span> View My Bookings
+<span class="c-num">4.</span> Search Movies
+
+<span class="c-head">BOOKING OPERATIONS (CREATE)</span>
+<span class="c-num">5.</span> Book Tickets
+
+<span class="c-head">UPDATE OPERATIONS (UPDATE)</span>
+<span class="c-num">6.</span> Update Movie Price
+<span class="c-num">7.</span> Update Customer Info
+
+<span class="c-head">DELETE OPERATIONS (DELETE)</span>
+<span class="c-num">8.</span> Delete Movie
+<span class="c-num">9.</span> Delete Customer
+
+<span class="c-num">10.</span> Exit
+
+<span class="c-dim">Enter your choice: _</span>
+        </div>
+        <p>Deleting a movie or customer requires typing <strong>"DELETE"</strong> as a second confirmation step, preventing accidental data loss.</p>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🖼️ Console Output Screenshots</h2>
+        <div class="media-block">
+          <img src="assets/READ.PNG" alt="Console output screenshot" class="about-image">
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- REST API ENDPOINTS -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🌐 REST Web Service Endpoints</h2>
+        <p><code>CinemaWebService.java</code> starts an HTTP server on <strong>port 8080</strong>. All responses are in JSON format with CORS enabled.</p>
+        <div class="endpoint-list">
+          <div class="endpoint"><span class="method-badge get">GET</span>    http://localhost:8080/movies</div>
+          <div class="endpoint"><span class="method-badge post">POST</span>   http://localhost:8080/bookings</div>
+        </div>
+        <p style="margin-top:1rem;">Each handler is implemented as a static inner class implementing <code>HttpHandler</code>. Requests are parsed from JSON using the <code>org.json</code> library, and responses include appropriate HTTP status codes (200, 201, 404, 405).</p>
+        <div style="display:flex; flex-direction:column; gap:1rem; margin-top:1.2rem;">
+          <div class="media-block" style="margin-bottom:0;">
+            <img src="assets/GET movies.PNG" alt="GET /movies Postman screenshot" class="about-image">
+          </div>
+          <div class="media-block" style="margin-bottom:0;">
+            <img src="assets/POST.PNG" alt="POST /bookings Postman screenshot" class="about-image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    
+
+    
+          
+
+    <!-- MEMBERSHIP TIERS -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🏷️ Membership & Discount System</h2>
+        <p>The <code>calculateDiscount()</code> method in <code>Customer.java</code> applies tiered pricing based on membership type:</p>
+        <table class="membership-table">
+          <thead><tr><th>Type</th><th>Discount</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge-std">Standard</span></td><td>0%</td></tr>
+            <tr><td><span class="badge-pre">Premium</span></td><td>10%</td></tr>
+            <tr><td><span class="badge-vip">VIP</span></td><td>20%</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:0.8rem;">New customers can register directly during ticket booking and choose their membership tier on the spot.</p>
+      </div>
+    </section>
+
+    <!-- OOP / SOLID -->
+    <section class="container">
+      <div class="case-section reveal">
+        <h2>🎓 OOP & SOLID Principles Applied</h2>
+        <div class="oop-grid">
+          <div class="oop-card">
+            <h4>🧬 Inheritance</h4>
+            <p><code>Customer</code> extends <code>User</code>, reusing id/name/email fields and adding membership-specific behavior without duplication.</p>
+          </div>
+          <div class="oop-card">
+            <h4>🔒 Encapsulation</h4>
+            <p>All fields across every class are <code>private</code> (or <code>protected</code> in User). Data is accessed only through getters/setters with validation (e.g., price and duration cannot be negative).</p>
+          </div>
+          <div class="oop-card">
+            <h4>🎭 Polymorphism</h4>
+            <p><code>Customer.displayInfo()</code> overrides <code>User.displayInfo()</code>. The <code>Payable</code> interface allows <code>Booking</code> to be treated polymorphically as a payable object.</p>
+          </div>
+          <div class="oop-card">
+            <h4>🧱 Composition</h4>
+            <p><code>Screening</code> contains a <code>List&lt;Seat&gt;</code> — seats are created and managed by the screening, showing a "has-a" composition relationship.</p>
+          </div>         
+        </div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section class="container" style="padding-bottom: 4rem;">
+      <div class="case-section reveal">
+        <h2>🔗 Links</h2>
+        <p>
+          <strong>GitHub Repository:</strong>
+          <a href="https://github.com/dewmiumegha-lab/cinema_booking_system" target="_blank" rel="noreferrer" style="color: var(--gold); font-weight: 600; text-decoration: none;">
+            github.com/dewmiumegha-lab
+          </a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+
+<footer>
+  <p>&copy; <span id="year"></span> <span>Dewmi Umegha</span>. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
