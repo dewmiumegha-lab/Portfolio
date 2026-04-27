@@ -491,15 +491,15 @@
     el.className='hicon';
     const sz=38+Math.random()*28;
     const fs=Math.min(sz*.34,14);
-    el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*95}%;bottom:-80px;font-size:${fs}px;font-family:'DM Mono',monospace;font-weight:600;letter-spacing:-0.5px;white-space:nowrap;color:rgba(245,200,66,${0.55+Math.random()*.35});animation-duration:${18+Math.random()*12}s;animation-delay:${Math.random()*2}s;`;
+    el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*95}%;bottom:-80px;font-size:${fs}px;font-family:'DM Mono',monospace;font-weight:600;letter-spacing:-0.5px;white-space:nowrap;color:rgba(245,200,66,${0.55+Math.random()*.35});animation-duration:${28+Math.random()*14}s;animation-delay:${Math.random()*2}s;`;
     const span=document.createElement('span');
     span.textContent=icons[Math.floor(Math.random()*icons.length)];
     el.appendChild(span);
     container.appendChild(el);
     setTimeout(()=>el.remove(),14000);
   }
-  setInterval(spawnBubble,2000);
-  for(let i=0;i<5;i++) setTimeout(spawnBubble,i*800);
+  setInterval(spawnBubble,4000);
+  for(let i=0;i<3;i++) setTimeout(spawnBubble,i*1500);
 })();
 
 // CURSOR
