@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Reviews App | Dewmi Umegha</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .highlights{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem;}
+    .highlight-card{background:rgba(200,200,198,0.03);border:1px solid var(--border);padding:1rem 1.4rem;text-align:center;min-width:90px;flex:1;}
+    .highlight-card .num{font-family:"Orbitron",monospace;font-size:1.5rem;font-weight:900;color:var(--gold3);margin-bottom:.3rem;}
+    .highlight-card p{font-size:.78rem;color:var(--text);letter-spacing:1px;margin:0;}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem;}
+    .feature-card{background:rgba(200,200,198,0.02);border:1px solid var(--border);padding:1.1rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .feat-icon{font-size:1.5rem;flex-shrink:0;}
+    .feature-card h4{font-family:"Orbitron",monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;letter-spacing:1px;}
+    .feature-card p{font-size:.85rem;color:var(--text);margin:0;}
+    .arch-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.85rem;}
+    .arch-table th{background:rgba(200,200,198,0.05);color:var(--mid);font-family:"Orbitron",monospace;font-size:.7rem;letter-spacing:1px;padding:.6rem .9rem;text-align:left;border-bottom:1px solid var(--border);}
+    .arch-table td{padding:.6rem .9rem;border-bottom:1px solid rgba(200,200,198,0.04);color:var(--text);vertical-align:top;}
+    .arch-table td:first-child{font-family:"Courier New",monospace;color:#4ade80;font-size:.8rem;}
+    .arch-table td:nth-child(2){color:var(--mid);font-size:.8rem;}
+    .code-block{background:#020408;border:1px solid rgba(200,200,198,0.14);padding:1.4rem;font-family:"Courier New",monospace;font-size:.82rem;line-height:2;margin:.75rem 0;white-space:pre-wrap;}
+    .c-title{color:var(--gold3);font-weight:700;font-size:.88rem;display:block;}
+    .c-key{color:#60a5fa;}
+    .c-val{color:#4ade80;}
+    .c-dim{color:var(--text);}
+  </style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+<canvas id="stars"></canvas>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+
+<header class="site-header">
+  <nav class="container">
+    <a class="nav-logo" href="index.html">D·U</a>
+    <a class="back-btn" href="index.html#projects">← Back</a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="case-hero container">
+    <p class="case-eyebrow">Distributed and Cloud Systems Programming</p>
+    <h1>Movie Reviews Web App</h1>
+    <div class="tags">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>JavaScript</span>
+      <span>Firebase Firestore</span>
+      <span>NoSQL</span>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="container">
+    <div class="case-section reveal">
+      <h2>📋 Project Overview</h2>
+      <p>A fully functional <strong>Movie Review Web Application</strong> built using HTML, CSS, and JavaScript, backed by a <strong>Google Firebase Cloud Firestore</strong> NoSQL database. The app allows users to add, edit, delete, and sort movie reviews in real time — with no backend server or user authentication required.</p>
+      <div class="highlights">
+        <div class="highlight-card">
+          <div class="num">4</div>
+          <p>CRUD Operations</p>
+        </div>
+        <div class="highlight-card">
+          <div class="num">4</div>
+          <p>Sort Fields</p>
+        </div>
+        <div class="highlight-card">
+          <div class="num">NoSQL</div>
+          <p>Firestore DB</p>
+        </div>
+        <div class="highlight-card">
+          <div class="num">Live</div>
+          <p>Real-time Sync</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="container">
+    <div class="case-section reveal">
+      <h2>⚡ Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feat-icon">➕</span>
+          <div>
+            <h4>Add Reviews</h4>
+            <p>Submit movie name, rating (0–5 integers), director name, and release date through a clean form interface.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feat-icon">✏️</span>
+          <div>
+            <h4>Edit Reviews</h4>
+            <p>Update any existing movie review directly from the list with instant Firestore sync.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feat-icon">🗑️</span>
+          <div>
+            <h4>Delete Reviews</h4>
+            <p>Remove reviews with a confirmation prompt to prevent accidental deletion.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feat-icon">🔃</span>
+          <div>
+            <h4>Sort by Any Field</h4>
+            <p>Sort the review list by Movie Name, Rating, Director, or Release Date using a dropdown selector.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feat-icon">☁️</span>
+          <div>
+            <h4>Cloud Firestore</h4>
+            <p>All data is stored and retrieved from Google Firebase Firestore — a scalable NoSQL cloud database.</p>
+          </div>
+        </div>
+        <div class="feature-card">
+          <span class="feat-icon">🔓</span>
+          <div>
+            <h4>No Authentication</h4>
+            <p>Fully open access — no login required. Firestore rules set to allow all reads and writes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="container">
+    <div class="case-section reveal">
+      <h2>🛠️ Technology Stack</h2>
+      <table class="arch-table">
+        <thead>
+          <tr><th>Technology</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>HTML5</td><td>Page structure and form elements</td></tr>
+          <tr><td>CSS3</td><td>Styling, dark theme, responsive layout</td></tr>
+          <tr><td>JavaScript (ES6 Modules)</td><td>App logic, DOM manipulation, Firebase calls</td></tr>
+          <tr><td>Firebase Firestore v10</td><td>NoSQL cloud database — stores all movie review documents</td></tr>
+          <tr><td>Firebase JS SDK (CDN)</td><td>Loaded via gstatic CDN — no npm required</td></tr>
+          <tr><td>VS Code Live Server</td><td>Local development server to bypass CORS restrictions</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FIRESTORE STRUCTURE -->
+  <section class="container">
+    <div class="case-section reveal">
+      <h2>🗄️ Firestore Database Structure</h2>
+      <p>Data is stored in a <strong>movies</strong> collection. Each document represents one movie review with four fields:</p>
+      <div class="code-block">
+<span class="c-title">Firestore — movies collection</span>
+
+<span class="c-dim">movies/</span>
+  <span class="c-dim">└── {auto-generated document ID}</span>
+        <span class="c-key">name</span>       : <span class="c-val">"Titanic"</span>
+        <span class="c-key">rating</span>     : <span class="c-val">4</span>
+        <span class="c-key">director</span>   : <span class="c-val">"James Cameron"</span>
+        <span class="c-key">date</span>       : <span class="c-val">"1997-12-19"</span>
+      </div>
+      <p>Documents are auto-ID'd by Firestore. The <code>orderBy()</code> query is used to sort the collection on any of the four fields before rendering.</p>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section class="container">
+    <div class="case-section reveal">
+      <h2>Screenshots</h2>
+      <div class="media-block">
+        <img src="assets\firebase database.PNG" alt="Movie Reviews App Screenshot" class="about-image">
+      </div>
+      <div class="media-block">
+        <img src="assets\create movie.PNG" alt="Movie Reviews App Screenshot" class="about-image">
+      </div>
+      <div class="media-block" style="margin-top:1rem;">
+        <img src="assets/read,update and delete options.png" alt="Firestore Database Screenshot" class="about-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="container">
+    <div class="case-section reveal">
+      <h2>⚙️ How It Works</h2>
+      <p>The app uses Firebase's JavaScript SDK loaded via CDN as ES modules. On page load, <code>loadMovies()</code> queries the Firestore <code>movies</code> collection with <code>orderBy()</code> and renders each document as a list item. The <strong>Add Movie</strong> button calls <code>addDoc()</code> to write a new document. Edit uses <code>updateDoc()</code> and Delete uses <code>deleteDoc()</code> — all in real time with no page reload needed.</p>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section class="container" style="padding-bottom: 4rem;">
+    <div class="case-section reveal">
+      <h2>🔗 Links</h2>
+      <p>
+        <strong>GitHub Repository:</strong>
+        <a href="https://github.com/dewmiumegha-lab/Movie-Review-Web" target="_blank" rel="noreferrer" style="color: var(--gold); font-weight: 600; text-decoration: none;">
+          github.com/dewmiumegha-lab
+        </a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; <span id="year"></span> <span>Dewmi Umegha</span>. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
